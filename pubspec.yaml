@@ -1,0 +1,48 @@
+name: getx_admin_panel
+description: "A new Flutter project."
+
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+
+
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.4.3 <4.0.0'
+
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+
+  cupertino_icons: ^1.0.6
+  go_router: ^14.2.0
+  flutter_admin_scaffold: ^1.3.0
+  syncfusion_flutter_datagrid: ^26.1.39
+  google_fonts: ^6.2.1
+  flutter_animate: ^4.5.0
+  syncfusion_flutter_core: ^26.1.39
+  get: ^4.6.6
+  http: ^1.2.1
+  faker: ^2.1.0 
+  flutter_easyloading: ^3.0.5
+  flutter_fancy_tree_view: ^1.6.0
+  flutter_advanced_switch: ^3.1.0
+  flutter_treeview: ^1.0.7+1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  flutter_lints: ^3.0.0
+
+
+flutter:
+
+ 
+  uses-material-design: true
+
+  assets:
+    - assets/
+    - assets/logo/
+ 
