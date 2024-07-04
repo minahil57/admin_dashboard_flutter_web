@@ -1,4 +1,5 @@
 import 'package:getx_admin_panel/core/imports/core_imports.dart';
+import 'package:getx_admin_panel/core/imports/external_imports.dart';
 
 class CustomButton extends StatelessWidget {
   const CustomButton({super.key});
@@ -8,7 +9,9 @@ class CustomButton extends StatelessWidget {
     return SizedBox(
       height: 50,
       child: ElevatedButton(
-        onPressed: () {},
+        onPressed: () {
+          context.go('/add_primary_account');
+        },
         style: ElevatedButton.styleFrom(
           backgroundColor: kcPrimaryColor, 
           foregroundColor: kcWhitecolor,

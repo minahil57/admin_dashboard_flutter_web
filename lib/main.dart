@@ -6,10 +6,10 @@ import 'package:getx_admin_panel/core/theme/app_colors.dart';
 import 'package:getx_admin_panel/core/theme/app_theme.dart';
 import 'package:getx_admin_panel/core/theme/text_style.dart';
 
-void main() {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
    EasyLoading.instance
-    ..textStyle = getMediumStyle(fontSize: 12, color: Colors.white)
+    ..textStyle = getMediumStyle(fontSize: 12, color: kcWhitecolor)
     ..loadingStyle = EasyLoadingStyle.custom
     ..backgroundColor = kcPrimaryColor
     ..radius = 12
@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return GetMaterialApp.router(
+    return   GetMaterialApp.router(
       debugShowCheckedModeBanner: false,
       routeInformationProvider: goRouter.routeInformationProvider,
       routeInformationParser: goRouter.routeInformationParser,
@@ -38,7 +38,7 @@ class MyApp extends StatelessWidget {
       title: 'Admin Panel',
       theme: buildCustomTheme(),
       builder: EasyLoading.init(),
-
+    
     );
   }
 }

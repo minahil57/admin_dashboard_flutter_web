@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:getx_admin_panel/core/theme/app_colors.dart';
 import 'package:getx_admin_panel/core/theme/text_style.dart';
 import 'package:getx_admin_panel/models/tree_node.dart';
-import 'package:getx_admin_panel/views/dashboard/dashboard_controller.dart';
+import 'package:getx_admin_panel/views/accounts_tree/accounts_tree_controller.dart';
 
 class MyTreeTile extends GetView<DashboardController> {
   const MyTreeTile({
@@ -28,15 +28,17 @@ class MyTreeTile extends GetView<DashboardController> {
             child: TreeIndentation(
               entry: entry,
               guide: const IndentGuide.connectingLines(
-                indent: 24,
+                indent: 14,
+                thickness: 2,
                 color: kcVeryLightGrey,
+                connectBranches: true
               ),
               child: GestureDetector(
                 onTap: onTap,
                 child: Container(
-                  margin: const EdgeInsets.symmetric(vertical: 16),
+                  // margin: const EdgeInsets.symmetric(vertical: 8),
                   padding:
-                      const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                      const EdgeInsets.symmetric( vertical: 8),
                   decoration: const BoxDecoration(
                     color: kcWhitecolor,
                     borderRadius: BorderRadius.all(
@@ -53,60 +55,69 @@ class MyTreeTile extends GetView<DashboardController> {
                           Icon(
                             controller.treeController
                                     .getExpansionState(entry.node)
-                                ? Icons.arrow_drop_down
-                                : Icons.arrow_right,
+                                ? Icons.keyboard_arrow_down
+                                : Icons.keyboard_arrow_right,
+                            color: kcBlackColor,
+                            size: 18,
                           ),
                           SizedBox(
                             width: entry.node.level == 2
-                                ? 70
+                                ? 100
                                 : entry.node.level == 3
-                                    ? 60
+                                    ? 80
                                     : entry.node.level == 4
-                                        ? 50
+                                        ? 70
                                         : entry.node.level == 5
-                                            ? 40
+                                            ? 70
                                             : entry.node.level == 6
-                                                ? 30
+                                                ? 60 
                                                 : 100,
                             child: Text(
                               entry.node.title,
                               overflow: TextOverflow.ellipsis,
                               maxLines: 1,
-                              style: getBoldStyle(
-                                fontSize: entry.node.level == 2
-                                    ? 15
+                              style: entry.node.level == 1 ?
+                              getBoldStyle(
+                                fontSize: 
+                                     18,
+                                    
+                                fontWeight: FontWeight.w600,
+                              ):
+                              getRegularStyle(
+                                fontSize:  entry.node.level == 2
+                                    ? 14
                                     : entry.node.level == 3
                                         ? 14
                                         : entry.node.level == 4
-                                            ? 13
+                                            ? 14
                                             : entry.node.level == 5
-                                                ? 12
+                                                ? 13
                                                 : entry.node.level == 6
-                                                    ? 11
-                                                    : 16,
-                                fontWeight: FontWeight.w600,
-                              ),
+                                                    ? 12
+                                                    : 14,
+                                ),
                             ),
                           ),
                         ],
                       ),
                       SizedBox(
-                        width: 100,
+                        width: 120,
                         child: Text(
                           entry.node.accCode,
                           overflow: TextOverflow.ellipsis,
                           maxLines: 1,
-                          style: getRegularStyle(fontSize: 14),
+                          style: getRegularStyle(fontSize: 16),
                         ),
                       ),
                       SizedBox(
-                        width: 100,
+                        width: 150,
                         child: Text(
                           'Balance : ${entry.node.balance}',
+                          textAlign: TextAlign.left,
                           overflow: TextOverflow.ellipsis,
                           maxLines: 1,
                           style: getRegularStyle(
-                            fontSize: 14,
+                            fontSize: 16,
                             color: entry.node.balance == '100000'
                                 ? kcGreenColor
                                 : kcRedColor,
@@ -114,12 +125,12 @@ class MyTreeTile extends GetView<DashboardController> {
                         ),
                       ),
                       SizedBox(
-                        width: 100,
+                        width: 20,
                         child: Text(
                           overflow: TextOverflow.ellipsis,
                           maxLines: 1,
-                          'Level ${entry.node.level}',
-                          style: getRegularStyle(fontSize: 14),
+                          '${entry.node.level}',
+                          style: getRegularStyle(fontSize: 16),
                         ),
                       ),
                       Obx(

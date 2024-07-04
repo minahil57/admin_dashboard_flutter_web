@@ -24,11 +24,9 @@ dependencies:
   syncfusion_flutter_core: ^26.1.39
   get: ^4.6.6
   http: ^1.2.1
-  faker: ^2.1.0 
   flutter_easyloading: ^3.0.5
   flutter_fancy_tree_view: ^1.6.0
-  flutter_advanced_switch: ^3.1.0
-  flutter_treeview: ^1.0.7+1
+  flutter_screenutil: ^5.9.3
 
 dev_dependencies:
   flutter_test:

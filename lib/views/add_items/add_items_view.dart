@@ -156,8 +156,7 @@ class AddItemView extends GetView<AddItemsController> {
       ),
     );
   }
-
-  Widget _buildRow(
+Widget _buildRow(
     List<String> labels,
     BuildContext context,
   ) {
@@ -169,6 +168,7 @@ class AddItemView extends GetView<AddItemsController> {
       ),
     );
   }
+  
 
   Widget _buildField(String label, BuildContext context) {
     final itemController = Get.put(AddItemsController());
