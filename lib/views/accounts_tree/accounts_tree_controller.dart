@@ -12,7 +12,7 @@ class DashboardController extends GetxController {
    final controller00 = ValueNotifier<bool>(false);
    bool _isDisposed = false;
    final ItemMasterService itemMasterService = ItemMasterService();
-    List<MyTreeNode> roots = <MyTreeNode>[
+    RxList<MyTreeNode> roots = <MyTreeNode>[
     // MyTreeNode(
     //   accountName: 'Assets',
     //   accountCode: '0010234001203',
@@ -326,10 +326,10 @@ class DashboardController extends GetxController {
     //     )
     //   ],
     // ),
-  ];
+  ].obs;
 
 
-  late TreeController<MyTreeNode>? treeController;
+  late TreeController <MyTreeNode> treeController ;
 
 
   void toggle(value,bool values) {
@@ -339,20 +339,44 @@ class DashboardController extends GetxController {
   
   }
   // RxBool isLoading = false.obs;
-
+  //   @override
+  // void onReady() async{
+  //   super.onReady();
+  //   treeController = TreeController<MyTreeNode>(
+  //     roots: roots,
+  //     childrenProvider: (MyTreeNode node) => node.children,
+  //   );
+  //   final token = await itemMasterService.getToken();
+  //   roots = await itemMasterService.getAccountTree(token);
+  //
+  //   update(
+  //     roots,);
+  //   refresh();
+  //   treeController = TreeController<MyTreeNode>(
+  //     roots: roots,
+  //     childrenProvider: (MyTreeNode node) => node.children,
+  //   );
+  //   refresh();
+  //
+  // }
     @override
   Future<void> onInit() async {
     super.onInit();
     if (!_isDisposed) {
       treeController = TreeController<MyTreeNode>(
-        roots: roots,
+        roots: roots.value,
         childrenProvider: (MyTreeNode node) => node.children,
       );
-      final token = await itemMasterService.getToken();
-      await itemMasterService.getAccountTree(token);
 
-      update(); // Notify GetX to rebuild widgets
+      await getData();
+
+      refresh();
     }
+  }
+  Future<List<MyTreeNode>> getData() async {
+    final token = await itemMasterService.getToken();
+    roots.value = await itemMasterService.getAccountTree(token);
+    return roots;
   }
   @override
   void dispose() {

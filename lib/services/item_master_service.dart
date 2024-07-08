@@ -99,7 +99,7 @@ class ItemMasterService{
     const lang = 'V+kBloEwqqVho1PINmQI0VJQwSBX2l/e';
 
     try {
-      // EasyLoading.show();
+      EasyLoading.show();
       final response = await dio.post(
         url,
         options: Options(
@@ -121,17 +121,18 @@ class ItemMasterService{
 
       if (response.statusCode == 200) {
         final List<dynamic> data = response.data['data'];
+        print(data);
         final List<MyTreeNode> accountTree = data.map((json) => MyTreeNode.fromJson(json)).toList();
-        print('Account Tree: $accountTree');
-        // EasyLoading.dismiss();
+        print('Account Tree: ${accountTree}');
+        EasyLoading.dismiss();
         return accountTree;
       } else {
-        // EasyLoading.dismiss();
+        EasyLoading.dismiss();
         print('Failed to get account tree: ${response.statusCode}');
         return [];
       }
     } catch (e) {
-      // EasyLoading.dismiss();
+      EasyLoading.dismiss();
       print('Error: $e');
       return [];
     }

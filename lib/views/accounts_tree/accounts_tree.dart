@@ -66,15 +66,36 @@ class AccountsTreeView extends GetView<DashboardController> {
             ),
             verticalSpaceSmall,
             Expanded(
-              child: TreeView<MyTreeNode>(
-                treeController:controller. treeController!,
-                nodeBuilder: (BuildContext context, TreeEntry<MyTreeNode> entry) {
-                  return MyTreeTile(
-                    key: ValueKey(entry.node),
-                    entry: entry,
-                    onTap: () => controller.treeController!.toggleExpansion(entry.node),
+
+             child: FutureBuilder<List<MyTreeNode>>(
+                future: controller.getData(),
+
+                builder: (BuildContext context, AsyncSnapshot<List<MyTreeNode>> snapshot) {
+                  late TreeController <MyTreeNode> treeController ;
+                  treeController = TreeController<MyTreeNode>(
+                    roots: snapshot.data!,
+                    childrenProvider: (MyTreeNode node) => node.children,
+                  );
+                  return
+                    snapshot.connectionState == ConnectionState.waiting ?
+                      const CircularProgressIndicator(
+                        color:kcWhitecolor,
+                      ):
+
+                     TreeView<MyTreeNode>(
+                    treeController:treeController,
+                    nodeBuilder: (BuildContext context, TreeEntry<MyTreeNode> entry) {
+                      return
+                        MyTreeTile(
+                          key: ValueKey(entry.node),
+                          entry: entry,
+                          onTap: () => treeController.toggleExpansion(entry.node),
+
+                        );
+                    },
                   );
                 },
+
               ),
             ),
           ],

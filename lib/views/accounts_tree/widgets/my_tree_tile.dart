@@ -123,8 +123,10 @@ class MyTreeTile extends GetView<DashboardController> {
                           maxLines: 1,
                           style: getRegularStyle(
                             fontSize: 16,
-                            color: entry.node.balance == '100000'
-                                ? kcGreenColor
+                            color: entry.node.balance > 0
+                                ? kcGreenColor :
+                            entry.node.balance == 0.00 ?
+                                Colors.blueAccent
                                 : kcRedColor,
                           ),
                         ),
