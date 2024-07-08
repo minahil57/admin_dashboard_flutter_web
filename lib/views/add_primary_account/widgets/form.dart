@@ -41,14 +41,15 @@ class MyForm extends GetView<AddPrimaryAccountController> {
                 onPressed: () {
                   controller.addToList(
                     MyTreeNode(
-                      title: controller.nameController.text,
-                      accCode: '11010001',
-                      balance: '34567542',
+                      accountName: controller.nameController.text,
+                      accountCode: '11010001',
+                      balance: 0.00,
                       level: 1,
                       isActive: false,
                       balanceType: 'Debit',
                       description: controller.descriptionController.text,
                       accType: controller.accountTypeController.text,
+                        isSelected: false,
                   ),
                   );
                 },

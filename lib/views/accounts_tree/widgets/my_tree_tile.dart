@@ -53,10 +53,15 @@ class MyTreeTile extends GetView<DashboardController> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Icon(
-                            controller.treeController
-                                    .getExpansionState(entry.node)
+                            controller.treeController!
+                                    .getExpansionState(entry.node) && entry.node.children.isNotEmpty
                                 ? Icons.keyboard_arrow_down
-                                : Icons.keyboard_arrow_right,
+                                :  entry.node.children.isEmpty ?
+                                Icons.keyboard_control :
+                            entry.node.children.isEmpty && controller.treeController!
+                                .getExpansionState(entry.node) ?
+                            Icons.keyboard_control:
+                            Icons.keyboard_arrow_right,
                             color: kcBlackColor,
                             size: 18,
                           ),
@@ -73,7 +78,7 @@ class MyTreeTile extends GetView<DashboardController> {
                                                 ? 60 
                                                 : 100,
                             child: Text(
-                              entry.node.title,
+                              entry.node.accountName,
                               overflow: TextOverflow.ellipsis,
                               maxLines: 1,
                               style: entry.node.level == 1 ?
@@ -103,7 +108,7 @@ class MyTreeTile extends GetView<DashboardController> {
                       SizedBox(
                         width: 120,
                         child: Text(
-                          entry.node.accCode,
+                          entry.node.accountCode,
                           overflow: TextOverflow.ellipsis,
                           maxLines: 1,
                           style: getRegularStyle(fontSize: 16),
@@ -148,9 +153,9 @@ class MyTreeTile extends GetView<DashboardController> {
                                 return kcPrimaryColor;
                               }
                               return kcPrimaryColor; // Use the default color.
-                            }),
+                            },),
                             onChanged: (value) {
-                              entry.node.isActive = value;
+                               controller.toggle(entry.node.isActive,value);
                             },
                           ),
                         ),

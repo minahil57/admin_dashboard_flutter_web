@@ -67,12 +67,12 @@ class AccountsTreeView extends GetView<DashboardController> {
             verticalSpaceSmall,
             Expanded(
               child: TreeView<MyTreeNode>(
-                treeController:controller. treeController,
+                treeController:controller. treeController!,
                 nodeBuilder: (BuildContext context, TreeEntry<MyTreeNode> entry) {
                   return MyTreeTile(
                     key: ValueKey(entry.node),
                     entry: entry,
-                    onTap: () => controller.treeController.toggleExpansion(entry.node),
+                    onTap: () => controller.treeController!.toggleExpansion(entry.node),
                   );
                 },
               ),

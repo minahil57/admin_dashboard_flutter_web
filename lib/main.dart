@@ -35,7 +35,7 @@ class MyApp extends StatelessWidget {
       routeInformationProvider: goRouter.routeInformationProvider,
       routeInformationParser: goRouter.routeInformationParser,
       routerDelegate: goRouter.routerDelegate,
-      title: 'Admin Panel',
+      title: 'Qfinity Finance Module',
       theme: buildCustomTheme(),
       builder: EasyLoading.init(),
     

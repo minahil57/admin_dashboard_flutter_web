@@ -15,10 +15,10 @@ class PrimaryAccountSource extends DataGridSource {
         .map<DataGridRow>(
           (e) => DataGridRow(
             cells: [
-              DataGridCell<String>(columnName: 'accountCode', value: e.accCode),
+              DataGridCell<String>(columnName: 'accountCode', value: e.accountCode),
               DataGridCell(columnName: 'description', value: e.description == null ? '-' : e.description!),
 
-              DataGridCell<String>(columnName: 'accountType', value: e.title),
+              DataGridCell<String>(columnName: 'accountType', value: e.accountName),
               DataGridCell<String>(
                   columnName: 'balanceType', value: e.balanceType),
                DataGridCell(columnName: 'actions', value : e.isActive),
@@ -83,9 +83,9 @@ class PrimaryAccountSource extends DataGridSource {
         .map<DataGridRow>(
           (e) => DataGridRow(
             cells: [
-              DataGridCell<String>(columnName: 'accountCode', value: e.accCode),
+              DataGridCell<String>(columnName: 'accountCode', value: e.accountCode),
               DataGridCell(columnName: 'description', value: e.description),
-              DataGridCell<String>(columnName: 'accountType', value: e.title),
+              DataGridCell<String>(columnName: 'accountType', value: e.accountName),
 
               DataGridCell<String>(
                   columnName: 'balanceType', value: e.balanceType),
