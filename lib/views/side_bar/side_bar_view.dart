@@ -21,17 +21,16 @@ class SideNavigationBar extends GetView<SideBarController> {
     final sideBarKey = ValueKey(Random().nextInt(100000000));
    
     return Obx(() => AdminScaffold(
+      backgroundColor: kcWhitecolor,
               appBar: AppBar(
                elevation: 2,
                 backgroundColor: kcWhitecolor,
-                title: Container(
-                  color: kcWhitecolor,
-                  
-                  child: Animate(
-                    effects: const [FadeEffect(), ScaleEffect()],
-                    child: Image.asset(AssetManager.qfinityLogo,
-                        width: 50, height: 50),
-                  ),
+
+                shadowColor: kcPrimaryColor,
+                title: Animate(
+                  effects: const [FadeEffect(), ScaleEffect()],
+                  child: Image.asset(AssetManager.qfinityLogo,
+                      width: 50, height: 50),
                 ),
                 actions: [
                   Stack(

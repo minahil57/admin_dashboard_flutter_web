@@ -11,40 +11,40 @@ class DashboardController extends GetxController {
       title: 'Assets',
       accCode: '0010234001203',
       balance: '100000',
-      isActive: false.obs,
+      isActive: false,
       level: 1,
       children: <MyTreeNode>[
         MyTreeNode(
           level: 2,
-          isActive: false.obs,
+          isActive: false,
           title: 'Asset 1',
           accCode: '00102',
           balance: '10000',
           children: <MyTreeNode>[
             MyTreeNode(
               level: 3,
-               isActive: false.obs,
+               isActive: false,
               title: 'Asset 1.1',
               accCode: '0010234001203',
               balance: '100000',
               children: <MyTreeNode>[
             MyTreeNode(
               level: 4,
-               isActive: false.obs,
+               isActive: false,
               title: 'Assets 1.1.1.1',
               accCode: '0010234001203',
               balance: '100000',
               children: [
                 MyTreeNode(
               level: 5,
-               isActive: false.obs,
+               isActive: false,
               title: 'Assets 1.1.1.1.1',
               accCode: '0010234001203',
               balance: '100000',
               children: [
                 MyTreeNode(
               level: 6,
-                isActive: false.obs,
+                isActive: false,
               title: 'Assets 1.1.1.1.1.1',
               accCode: '0010234001203',
               balance: '100000',
@@ -60,49 +60,49 @@ class DashboardController extends GetxController {
         ),
          MyTreeNode(
           level: 2,
-          isActive: false.obs,
+          isActive: false,
           title: 'Asset 2',
           accCode: '00102',
           balance: '10000',
           children: <MyTreeNode>[
             MyTreeNode(
               level: 3,
-               isActive: false.obs,
+               isActive: false,
               title: 'Asset 2.1',
               accCode: '0010234001203',
               balance: '100000',
               children: <MyTreeNode>[
             MyTreeNode(
               level: 4,
-               isActive: false.obs,
+               isActive: false,
               title: 'Assets 2.1.1.1',
               accCode: '0010234001203',
               balance: '100000',
               children: [
                 MyTreeNode(
               level: 5,
-               isActive: false.obs,
+               isActive: false,
               title: 'Assets 2.1.1.1.1',
               accCode: '0010234001203',
               balance: '100000',
               children: [
                 MyTreeNode(
               level: 6,
-                isActive: false.obs,
+                isActive: false,
               title: 'Assets 2.1.1.1.1.1',
               accCode: '0010234001203',
               balance: '100000',
             ),
              MyTreeNode(
               level: 6,
-                isActive: false.obs,
+                isActive: false,
               title: 'Assets 2.1.1.1.1.1',
               accCode: '0010234001203',
               balance: '100000',
             ),
              MyTreeNode(
               level: 6,
-                isActive: false.obs,
+                isActive: false,
               title: 'Assets 2.1.1.1.1.1',
               accCode: '0010234001203',
               balance: '100000',
@@ -114,14 +114,14 @@ class DashboardController extends GetxController {
             ),
              MyTreeNode(
               level: 5,
-                isActive: false.obs,
+                isActive: false,
               title: 'Assets 2.1.1.1.1.1',
               accCode: '0010234001203',
               balance: '100000',
             ),
              MyTreeNode(
               level: 5,
-                isActive: false.obs,
+                isActive: false,
               title: 'Assets 2.1.1.1.1.1',
               accCode: '0010234001203',
               balance: '100000',
@@ -133,7 +133,7 @@ class DashboardController extends GetxController {
         MyTreeNode(
           title: 'Asset 3',
           level: 2,
-            isActive: false.obs,
+            isActive: false,
           accCode: '00102340013',
           balance: '10000',
         ),
@@ -142,21 +142,21 @@ class DashboardController extends GetxController {
     MyTreeNode(
       level: 1,
       title: 'Liabilities',
-      isActive: false.obs,
+      isActive: false,
       accCode: '0010234001203',
       balance: '100000',
       children: <MyTreeNode>[
         MyTreeNode(
           level: 2,
           title: 'Liability 1',
-          isActive: false.obs,
+          isActive: false,
           accCode: '0010234001203',
           balance: '100000',
           children: <MyTreeNode>[
             MyTreeNode(
               level: 3,
               title: 'Liability 1.1',
-              isActive: false.obs,
+              isActive: false,
               accCode: '0010234001203',
               balance: '100000',
             ),
@@ -165,7 +165,7 @@ class DashboardController extends GetxController {
         MyTreeNode(
           level: 2,
           title: 'Liability 2',
-            isActive: false.obs,
+            isActive: false,
           accCode: '0010234001203',
           balance: '100000',
         )
@@ -175,20 +175,20 @@ class DashboardController extends GetxController {
         level: 1,
       title: 'Equity',
       accCode: '0010234001203',
-        isActive: false.obs,
+        isActive: false,
       balance: '100000',
       children: <MyTreeNode>[
         MyTreeNode(
           level: 2,
           title: 'Equity 1',
-           isActive: false.obs,
+           isActive: false,
           accCode: '0010234001203',
           balance: '100000',
           children: <MyTreeNode>[
             MyTreeNode(
               level: 3,
               title: 'Equity 1.1',
-              isActive: false.obs,
+              isActive: false,
               accCode: '0010234001203',
               balance: '100000',
             ),
@@ -197,7 +197,7 @@ class DashboardController extends GetxController {
         MyTreeNode(
           level: 2,
           title: 'Equity 2',
-           isActive: false.obs,
+           isActive: false,
           accCode: '0010234001203',
           balance: '100000',
         )
@@ -206,21 +206,21 @@ class DashboardController extends GetxController {
       MyTreeNode(
         level: 1,
       title: 'Revenue',
-        isActive: false.obs,
+        isActive: false,
       accCode: '0010234001203',
       balance: '100000',
       children: <MyTreeNode>[
         MyTreeNode(
           level: 2,
           title: 'Revenue 1',
-       isActive: false.obs,
+       isActive: false,
           accCode: '0010234001203',
           balance: '100000',
           children: <MyTreeNode>[
             MyTreeNode(
               level: 3,
               title: 'Revenue 1.1',
-                isActive: false.obs,
+                isActive: false,
               accCode: '0010234001203',
               balance: '100000',
             ),
@@ -229,7 +229,7 @@ class DashboardController extends GetxController {
         MyTreeNode(
           level: 1,
           title: 'Revenue 2',
-           isActive: false.obs,
+           isActive: false,
           accCode: '0010234001203',
           balance: '100000',
         )
@@ -239,18 +239,18 @@ class DashboardController extends GetxController {
         level: 1,
       title: 'Expenses',
       accCode: '0010234001203',
-       isActive: false.obs,
+       isActive: false,
       balance: '100000',
       children: <MyTreeNode>[
         MyTreeNode(
           level: 2,
           title: 'Expenses 1',
-            isActive: false.obs,
+            isActive: false,
 
           accCode: '0010234001203',
           balance: '100000',
           children: <MyTreeNode>[
-            MyTreeNode( isActive: false.obs,
+            MyTreeNode( isActive: false,
               level: 3,
               title: 'Expenses 1.1.1',
               accCode: '0010234001203',
@@ -258,14 +258,14 @@ class DashboardController extends GetxController {
               children: [
                 MyTreeNode(
               level: 4,
-               isActive: false.obs,
+               isActive: false,
               title: 'Expenses 1.1.1.1',
               accCode: '0010234001203',
               balance: '100000',
               children: [
                 MyTreeNode(
               level: 5,
-                isActive: false.obs,
+                isActive: false,
               title: 'Expenses 1.1.1.1.1',
               accCode: '0010234001203',
               balance: '100000',
@@ -279,7 +279,7 @@ class DashboardController extends GetxController {
         MyTreeNode(
           level: 2,
           title: 'Expenses 2',
-          isActive: false.obs,
+          isActive: false,
           accCode: '0010234001203',
           balance: '100000',
         )

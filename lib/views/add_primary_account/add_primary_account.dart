@@ -1,8 +1,6 @@
-import 'package:flutter/material.dart';
 import 'package:getx_admin_panel/core/imports/core_imports.dart';
+import 'package:getx_admin_panel/views/add_primary_account/widgets/data_grid.dart';
 import 'package:getx_admin_panel/views/add_primary_account/widgets/form.dart';
-import 'package:getx_admin_panel/widgets/rounded_text_field.dart';
-
 class AddPrimaryAccount extends StatelessWidget {
   const AddPrimaryAccount({super.key});
 
@@ -21,16 +19,15 @@ class AddPrimaryAccount extends StatelessWidget {
               Text(' Primary Account',style: getRegularBoldStyle()),
               verticalSpaceMedium,
               Container(
-                margin: const EdgeInsets.symmetric(horizontal: 20),
-                height: 200,
+                padding: const EdgeInsets.symmetric(horizontal: 20,vertical: 20),
                 decoration:  BoxDecoration(
                   color: kcWhitecolor,
                   boxShadow:  [
-                    BoxShadow(  
+                    BoxShadow(
                       color: kcPrimaryColor.withOpacity(0.2),
                       spreadRadius: 1,
                       blurRadius: 1,
-                      offset: Offset(0, 2), // changes position of shadow
+                      offset: const Offset(0, 2), // changes position of shadow
                     ),
                   ],
                   borderRadius: const BorderRadius.all(
@@ -40,11 +37,17 @@ class AddPrimaryAccount extends StatelessWidget {
                     color: kcPrimaryColor,
                   )
                 ),
-                
-                child: MyForm(),
+
+                child: const MyForm(),
               ),
               verticalSpaceMedium,
-             
+               const PrimaryAccountDataGrid(),
+              verticalSpaceMedium,
+              verticalSpaceMedium,
+              verticalSpaceMedium,
+              verticalSpaceMedium,
+
+
             ],
           ),
         ),

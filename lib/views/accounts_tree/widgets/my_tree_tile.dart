@@ -28,7 +28,7 @@ class MyTreeTile extends GetView<DashboardController> {
             child: TreeIndentation(
               entry: entry,
               guide: const IndentGuide.connectingLines(
-                indent: 14,
+                indent: 6,
                 thickness: 2,
                 color: kcVeryLightGrey,
                 connectBranches: true
@@ -133,10 +133,10 @@ class MyTreeTile extends GetView<DashboardController> {
                           style: getRegularStyle(fontSize: 16),
                         ),
                       ),
-                      Obx(
-                        () => UnconstrainedBox(
+
+                         UnconstrainedBox(
                           child: Switch(
-                            value: entry.node.isActive.value,
+                            value: entry.node.isActive,
                             activeColor: kcPrimaryColor,
                             activeTrackColor: kcWhitecolor,
                             inactiveTrackColor: kcWhitecolor,
@@ -150,11 +150,11 @@ class MyTreeTile extends GetView<DashboardController> {
                               return kcPrimaryColor; // Use the default color.
                             }),
                             onChanged: (value) {
-                              entry.node.isActive.value = value;
+                              entry.node.isActive = value;
                             },
                           ),
                         ),
-                      ),
+
                     ],
                   ),
                 ),

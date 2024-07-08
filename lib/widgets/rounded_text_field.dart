@@ -37,7 +37,7 @@ class RoundedTextField extends StatelessWidget {
                 fontSize: 12,
               ),
               decoration: InputDecoration(
-                labelText: label,
+
                 floatingLabelStyle: getRegularStyle(color: kcPrimaryColor, fontSize: 12),
                 labelStyle: getRegularStyle(
                   fontSize: 10,
