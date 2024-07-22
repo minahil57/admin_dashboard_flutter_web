@@ -15,7 +15,10 @@ Future<void> main() async {
     ..radius = 12
     ..indicatorSize = 30
     ..textColor = kcPrimaryColor
-    ..textStyle = getMediumStyle(fontSize: 14)
+   ..indicatorType=EasyLoadingIndicatorType.doubleBounce
+     ..toastPosition = EasyLoadingToastPosition.top
+     ..textColor = kcWhitecolor
+    ..textStyle = getMediumStyle(fontSize: 14,color: kcWhitecolor)
     ..indicatorColor = kcWhitecolor
     ..maskColor = kcBlackColor
     ..userInteractions = false

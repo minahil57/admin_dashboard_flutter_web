@@ -16,9 +16,9 @@ class CustomButton extends StatelessWidget {
           backgroundColor: kcPrimaryColor, 
           foregroundColor: kcWhitecolor,
           shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(15),
-              bottomRight: Radius.circular(15),
+            borderRadius: BorderRadius.all(
+               Radius.circular(15),
+
             ),
           ),
         ),

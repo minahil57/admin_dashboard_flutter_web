@@ -1,10 +1,11 @@
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 
-Future<void> showToast(String message){
-  return EasyLoading.showToast(
-    message,
-    toastPosition: EasyLoadingToastPosition.top,
-    dismissOnTap: true,
-    duration: const Duration(milliseconds: 1000),
-    );  
-}
+void showToast({
+  required String message,
+}) =>
+    EasyLoading.showToast(
+      message,
+      toastPosition: EasyLoadingToastPosition.top,
+
+      maskType: EasyLoadingMaskType.clear,
+    );

@@ -12,14 +12,14 @@ class SplashScreen extends GetView<StartUpController> {
       backgroundColor: Colors.black,
       body: Center(
         child: Obx(() => AnimatedOpacity(
-              opacity: controller.opacity.value,
-              duration: const Duration(seconds: 5),
-              child: Image.asset(
-                AssetManager.qfinityLogoWhite,
-                width: 200,
-                height: 200,
-              ), // Make sure you have the image in the assets folder
-            )),
+          opacity: controller.opacity.value,
+          duration: const Duration(seconds: 5),
+          child: Image.asset(
+            AssetManager.qfinityLogoWhite,
+            width: 200,
+            height: 200,
+          ), // Make sure you have the image in the assets folder
+        )),
       ),
     );
   }

@@ -3,7 +3,7 @@ import 'package:flutter_admin_scaffold/admin_scaffold.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:getx_admin_panel/core/imports/core_imports.dart';
 import 'package:getx_admin_panel/core/imports/external_imports.dart';
-import 'package:getx_admin_panel/views/side_bar/side_bar_constructor.dart';
+import 'package:getx_admin_panel/views/side_bar/side_bar_contoller.dart';
 
 class SideNavigationBar extends GetView<SideBarController> {
   final StatefulNavigationShell navigationShell;
@@ -21,6 +21,7 @@ class SideNavigationBar extends GetView<SideBarController> {
     final sideBarKey = ValueKey(Random().nextInt(100000000));
    
     return Obx(() => AdminScaffold(
+      mobileThreshold: 1100,
       backgroundColor: kcWhitecolor,
               appBar: AppBar(
                elevation: 2,
@@ -29,35 +30,40 @@ class SideNavigationBar extends GetView<SideBarController> {
                 shadowColor: kcPrimaryColor,
                 title: Animate(
                   effects: const [FadeEffect(), ScaleEffect()],
-                  child: Image.asset(AssetManager.qfinityLogo,
+                  child: Image.asset(AssetManager.qfinityWithoutBackgroundLogo,
                       width: 50, height: 50),
                 ),
                 actions: [
                   Stack(
                     children: [
-                      Container(
-                        alignment: Alignment.center,
-                        margin: const EdgeInsets.all(10),
-                        padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 1),
-                        decoration: BoxDecoration(
-                          color: kcPrimaryColor,
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: Row(
-                  children: [
-                    const Icon(
-                      Icons.arrow_drop_down,
-                      color: kcWhitecolor,
-                      size: 18,
-                    ),
-                    Text(
-                      'Admin',
-                      style: getRegularStyle(color: kcWhitecolor),
-                    ),
-                    
-                  ],
-                ),
-              ),
+                      GestureDetector(
+                        onTap: (){
+                          context.go('/editable_table');
+                        },
+                        child: Container(
+                          alignment: Alignment.center,
+                          margin: const EdgeInsets.all(10),
+                          padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 1),
+                          decoration: BoxDecoration(
+                            color: kcPrimaryColor,
+                        borderRadius: BorderRadius.circular(10),
+                                            ),
+                                            child: Row(
+                                          children: [
+                                            const Icon(
+                        Icons.arrow_drop_down,
+                        color: kcWhitecolor,
+                        size: 18,
+                                            ),
+                                            Text(
+                        'Admin',
+                        style: getRegularStyle(color: kcWhitecolor),
+                                            ),
+
+                                          ],
+                                        ),
+                                      ),
+                      ),
               Positioned(
                 right: 0,
                 bottom: 10,

@@ -16,19 +16,47 @@ dependencies:
 
 
   cupertino_icons: ^1.0.6
+#  https://pub.dev/packages/go_router
   go_router: ^14.2.0
+#  https://pub.dev/packages/flutter_admin_scaffold
   flutter_admin_scaffold: ^1.3.0
+#  https://pub.dev/packages/syncfusion_flutter_datagrid
   syncfusion_flutter_datagrid: ^26.1.39
+#  https://pub.dev/packages/google_fonts
   google_fonts: ^6.2.1
+#  https://pub.dev/packages/flutter_animate
   flutter_animate: ^4.5.0
+#  https://pub.dev/packages/syncfusion_flutter_core
   syncfusion_flutter_core: ^26.1.39
+#  https://pub.dev/packages/get
   get: ^4.6.6
-  http: ^1.2.1
+#  https://pub.dev/packages/flutter_easyloading/versions
   flutter_easyloading: ^3.0.5
+#  https://pub.dev/packages/flutter_fancy_tree_view
   flutter_fancy_tree_view: ^1.6.0
+#  https://pub.dev/packages/flutter_screenutil
   flutter_screenutil: ^5.9.3
+#  https://pub.dev/packages/flutter_launcher_icons
   flutter_launcher_icons: ^0.13.1
+#  https://pub.dev/packages/dio
   dio: ^5.5.0+1
+#  https://pub.dev/packages/image_picker
+  image_picker: ^1.1.2
+#https://pub.dev/packages/image_picker_for_web#limitations-on-the-web-platform
+  image_picker_for_web: ^3.0.4
+#  https://pub.dev/packages/dotted_border
+  dotted_border: ^2.1.0
+#  https://pub.dev/packages/flutter_svg
+  flutter_svg: ^2.0.10+1
+#  https://pub.dev/packages/flutter_dropzone
+  flutter_dropzone: ^4.0.1
+
+
+#https://pub.dev/packages/pluto_grid
+  pluto_grid: ^8.0.0
+#  https://pub.dev/packages/animated_custom_dropdown
+  animated_custom_dropdown: ^3.1.1
+
 
 dev_dependencies:
   flutter_test:
@@ -45,4 +73,5 @@ flutter:
   assets:
     - assets/
     - assets/logo/
+    - assets/icon/
  

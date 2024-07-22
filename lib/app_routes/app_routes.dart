@@ -1,15 +1,17 @@
 
 import 'package:flutter/material.dart';
-import 'package:getx_admin_panel/views/add_items/add_items_view.dart';
 import 'package:getx_admin_panel/views/accounts_tree/accounts_tree.dart';
 import 'package:getx_admin_panel/views/add_primary_account/add_primary_account.dart';
 import 'package:getx_admin_panel/views/dashboard/dashboard_view.dart';
-import 'package:getx_admin_panel/views/item_master/item_master_view.dart';
+import 'package:getx_admin_panel/views/editable_table.dart';
 import 'package:getx_admin_panel/views/reports/reports_view.dart';
 import 'package:getx_admin_panel/views/sales/sales_view.dart';
 import 'package:getx_admin_panel/views/side_bar/side_bar_view.dart';
 import 'package:getx_admin_panel/views/start_up/start_up_view.dart';
+import 'package:getx_admin_panel/views/sync_fusion_table.dart';
 import 'package:go_router/go_router.dart';
+
+import '../views/add_purchase_voucher/add_purchase_voucher_view.dart';
 
 final goRouter = GoRouter(
     initialLocation: '/splash',
@@ -59,7 +61,7 @@ final goRouter = GoRouter(
             //   ],
               pageBuilder: (context, state) {
                 return const MaterialPage(
-                  child: AddItemView(),
+                  child: PurchaseVoucherView(),
                 );
               },
             ),
@@ -79,28 +81,28 @@ final goRouter = GoRouter(
         
           StatefulShellBranch(routes: [
             GoRoute(
-              name: 'report',
-              path: '/report',
+              name: 'purchase',
+              path: '/purchase_voucher',
               pageBuilder: (context, state) {
                 return const MaterialPage(
-                  child: ReportView(),
+                  child: PurchaseVoucherView(),
                 );
               },
             ),
           ]),
-          //     StatefulShellBranch(routes: [
-          //   GoRoute(
-          //     name: 'Accounts Tree',
-          //     path: '/accounts_tree',
+              StatefulShellBranch(routes: [
+            GoRoute(
+              name: 'Accounts Tree',
+              path: '/editable_table',
              
-          //     pageBuilder: (context, state) {
-          //       return const MaterialPage(
-          //         child: ItemMasterView(),
-          //       );
+              pageBuilder: (context, state) {
+                return  MaterialPage(
+                  child: EditingDataGrid(),
+                );
                 
-          //     },
-          //   ),
-          // ]),
+              },
+            ),
+          ]),
           StatefulShellBranch(routes: [
             GoRoute(
               name: 'sales',

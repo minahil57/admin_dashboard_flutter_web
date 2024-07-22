@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:getx_admin_panel/core/theme/app_colors.dart';
 import 'package:getx_admin_panel/core/theme/text_style.dart';
 import 'package:getx_admin_panel/views/add_primary_account/add_primary_account_controller.dart';
-import 'package:getx_admin_panel/views/item_master/item_master_controller.dart';
 import 'package:syncfusion_flutter_core/theme.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 
@@ -41,7 +40,7 @@ class PrimaryAccountDataGrid extends GetView<AddPrimaryAccountController> {
                 GridColumn(
                   columnName: 'accountCode',
                   label: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 24),
+                    padding: const EdgeInsets.symmetric(horizontal: 24),
                     child: Text(
                       'Account Code',
                       textAlign: TextAlign.center,
@@ -55,7 +54,7 @@ class PrimaryAccountDataGrid extends GetView<AddPrimaryAccountController> {
                 GridColumn(
                   columnName: 'description',
                   label: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 24),
+                    padding: const EdgeInsets.symmetric(horizontal: 24),
                     child: Text(
                       'Description',
 

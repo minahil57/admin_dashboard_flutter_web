@@ -1,15 +1,14 @@
-import 'dart:convert';
 
 import 'package:getx_admin_panel/models/user_company.dart';
 
-class ApiResponse {
+class UserApiResponse {
   bool status;
   UserData data;
 
-  ApiResponse({required this.status, required this.data});
+  UserApiResponse({required this.status, required this.data});
 
-  factory ApiResponse.fromJson(Map<String, dynamic> json) {
-    return ApiResponse(
+  factory UserApiResponse.fromJson(Map<String, dynamic> json) {
+    return UserApiResponse(
       status: json['status'],
       data: UserData.fromJson(json['data']),
     );

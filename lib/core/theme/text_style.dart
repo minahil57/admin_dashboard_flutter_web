@@ -28,10 +28,12 @@ TextStyle getRegularBoldStyle({
 TextStyle getMediumStyle({
   Color color = kcBlackColor,
   double fontSize = 14,
+
 }) {
   return GoogleFonts.poppins(
     fontSize: fontSize,
     color: color,
+    fontWeight: FontWeight.w500,
   );
 }
 

@@ -1,4 +1,3 @@
-import 'package:get/get_rx/src/rx_types/rx_types.dart';
 
 class MyTreeNode {
   MyTreeNode({
@@ -13,10 +12,18 @@ class MyTreeNode {
     this.balanceType,
     this.description,
     this.accType,
+    this.parent,
 
 
     this.children = const <MyTreeNode>[],
-  });
+
+  })
+  {
+  // Set parent for all children
+  for (var child in children) {
+  child.parent = this;
+  }
+}
 
   final String accountName;
   final String accountCode;
@@ -27,6 +34,7 @@ class MyTreeNode {
   String ? accType;
   String ? description;
   bool isSelected;
+  MyTreeNode? parent;
   bool  isActive  ;
    List<MyTreeNode> children;
   factory MyTreeNode.fromJson(Map<String, dynamic> json) {

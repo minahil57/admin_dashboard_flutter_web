@@ -1,10 +1,10 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_fancy_tree_view/flutter_fancy_tree_view.dart';
 import 'package:get/get.dart';
-import 'package:getx_admin_panel/core/theme/app_colors.dart';
-import 'package:getx_admin_panel/core/theme/text_style.dart';
+import 'package:getx_admin_panel/core/imports/external_imports.dart';
 import 'package:getx_admin_panel/models/tree_node.dart';
 import 'package:getx_admin_panel/views/accounts_tree/accounts_tree_controller.dart';
+
+import '../../../core/imports/core_imports.dart';
 
 class MyTreeTile extends GetView<DashboardController> {
   const MyTreeTile({
@@ -19,8 +19,72 @@ class MyTreeTile extends GetView<DashboardController> {
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(DashboardController());
+    TextSpan highlightText(String text, String query) {
+      if (query.isEmpty) {
+        return TextSpan(
+          text: text,
+          style: entry.node.level == 1
+              ? getBoldStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.w600,
+          )
+              : getRegularStyle(
+            fontSize: getResponsiveSmallFontSize(context),
+          ),
+        );
+      }
+      final matches = RegExp(query, caseSensitive: false).allMatches(text);
+      if (matches.isEmpty) {
+        return TextSpan(
+          text: text,
+          style: entry.node.level == 1
+              ? getBoldStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.w600,
+          )
+              : getRegularStyle(
+            fontSize: getResponsiveSmallFontSize(context),
+          ),
+        );
+      }
+      final List<TextSpan> spans = [];
+      int start = 0;
+      for (final match in matches) {
+        if (match.start > start) {
+          spans.add(TextSpan(
+            text: text.substring(start, match.start),
+            style: entry.node.level == 1
+                ? getBoldStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.w600,
+            )
+                : getRegularStyle(
+              fontSize: getResponsiveSmallFontSize(context),
+            ),
+          ));
+        }
+        spans.add(
+            TextSpan(
+          text: text.substring(match.start, match.end),
+          style: TextStyle(
+            backgroundColor: Colors.yellow, // Highlight color
+            fontWeight: FontWeight.bold,
+            fontSize: getResponsiveSmallFontSize(context),
+          ),
+        ));
+        start = match.end;
+      }
+      if (start < text.length) {
+        spans.add(TextSpan(
+          text: text.substring(start),
+          style: getRegularStyle(fontSize: getResponsiveSmallFontSize(context)),
+        ));
+      }
+      return TextSpan(children: spans);
+    }
+
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 36),
+      padding: const EdgeInsets.symmetric(horizontal: 30),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -28,120 +92,79 @@ class MyTreeTile extends GetView<DashboardController> {
             child: TreeIndentation(
               entry: entry,
               guide: const IndentGuide.connectingLines(
-                indent: 6,
+                indent: 24,
                 thickness: 2,
                 color: kcVeryLightGrey,
-                connectBranches: true
+                connectBranches: true,
               ),
               child: GestureDetector(
                 onTap: onTap,
-                child: Container(
-                  // margin: const EdgeInsets.symmetric(vertical: 8),
-                  padding:
-                      const EdgeInsets.symmetric( vertical: 8),
-                  decoration: const BoxDecoration(
-                    color: kcWhitecolor,
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(10),
-                    ),
-                  ),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Icon(
-                            controller.treeController!
-                                    .getExpansionState(entry.node) && entry.node.children.isNotEmpty
-                                ? Icons.keyboard_arrow_down
-                                :  entry.node.children.isEmpty ?
-                                Icons.keyboard_control :
-                            entry.node.children.isEmpty && controller.treeController!
-                                .getExpansionState(entry.node) ?
-                            Icons.keyboard_control:
-                            Icons.keyboard_arrow_right,
-                            color: kcBlackColor,
-                            size: 18,
-                          ),
-                          SizedBox(
-                            width: entry.node.level == 2
-                                ? 100
-                                : entry.node.level == 3
-                                    ? 80
-                                    : entry.node.level == 4
-                                        ? 70
-                                        : entry.node.level == 5
-                                            ? 70
-                                            : entry.node.level == 6
-                                                ? 60 
-                                                : 100,
-                            child: Text(
-                              entry.node.accountName,
-                              overflow: TextOverflow.ellipsis,
-                              maxLines: 1,
-                              style: entry.node.level == 1 ?
-                              getBoldStyle(
-                                fontSize: 
-                                     18,
-                                    
-                                fontWeight: FontWeight.w600,
-                              ):
-                              getRegularStyle(
-                                fontSize:  entry.node.level == 2
-                                    ? 14
-                                    : entry.node.level == 3
-                                        ? 14
-                                        : entry.node.level == 4
-                                            ? 14
-                                            : entry.node.level == 5
-                                                ? 13
-                                                : entry.node.level == 6
-                                                    ? 12
-                                                    : 14,
-                                ),
+                onDoubleTap: (){controller.showContextMenu(context);},
+                child: Table(
+                  columnWidths: const {
+                    0: FlexColumnWidth(),
+                    1: FixedColumnWidth(230), // Account code column
+                    2: FixedColumnWidth(250), // Balance column
+                    3: FixedColumnWidth(80),  // Level column
+                    4: FixedColumnWidth(80),
+                  },
+                  // textBaseline: TextBaseline.ideographic,
+                  defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+                  children: [
+                    TableRow(
+                      children: [
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Icon(
+                              controller.treeController.getExpansionState(entry.node) &&
+                                  entry.node.children.isNotEmpty
+                                  ? Icons.keyboard_arrow_down
+                                  : entry.node.children.isEmpty
+                                  ? Icons.keyboard_control
+                                  : Icons.keyboard_arrow_right,
+                              color: kcBlackColor,
+                              size: 18,
                             ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(
-                        width: 120,
-                        child: Text(
+                            // const SizedBox(width: 8),
+                            Flexible(
+                              flex: 2,
+                              child:Obx(()
+                                => RichText(
+                                  text: highlightText(entry.node.accountName, controller.searchQuery.value),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        Text(
                           entry.node.accountCode,
                           overflow: TextOverflow.ellipsis,
                           maxLines: 1,
-                          style: getRegularStyle(fontSize: 16),
+                          style: getRegularStyle(fontSize: getResponsiveSmallFontSize(context)),
                         ),
-                      ),
-                      SizedBox(
-                        width: 150,
-                        child: Text(
-                          'Balance : ${entry.node.balance}',
+                        Text(
+                          '${entry.node.balance}',
                           textAlign: TextAlign.left,
                           overflow: TextOverflow.ellipsis,
                           maxLines: 1,
                           style: getRegularStyle(
-                            fontSize: 16,
+                            fontSize: getResponsiveSmallFontSize(context),
                             color: entry.node.balance > 0
-                                ? kcGreenColor :
-                            entry.node.balance == 0.00 ?
-                                Colors.blueAccent
+                                ? kcGreenColor
+                                : entry.node.balance == 0.00
+                                ? Colors.blueAccent
                                 : kcRedColor,
                           ),
                         ),
-                      ),
-                      SizedBox(
-                        width: 20,
-                        child: Text(
+                        Text(
+                          '${entry.node.level}',
                           overflow: TextOverflow.ellipsis,
                           maxLines: 1,
-                          '${entry.node.level}',
-                          style: getRegularStyle(fontSize: 16),
+                          style: getRegularStyle(fontSize: getResponsiveSmallFontSize(context)),
                         ),
-                      ),
-
-                         UnconstrainedBox(
+                        UnconstrainedBox(
                           child: Switch(
                             value: entry.node.isActive,
                             activeColor: kcPrimaryColor,
@@ -149,21 +172,22 @@ class MyTreeTile extends GetView<DashboardController> {
                             inactiveTrackColor: kcWhitecolor,
                             inactiveThumbColor: kcPrimaryColor,
                             trackOutlineColor:
-                                WidgetStateProperty.resolveWith<Color?>(
-                                    (Set<WidgetState> states) {
-                              if (states.contains(WidgetState.disabled)) {
+                            WidgetStateProperty.resolveWith<Color?>(
+                                  (Set<WidgetState> states) {
+                                if (states.contains(WidgetState.disabled)) {
+                                  return kcPrimaryColor;
+                                }
                                 return kcPrimaryColor;
-                              }
-                              return kcPrimaryColor; // Use the default color.
-                            },),
+                              },
+                            ),
                             onChanged: (value) {
-                               controller.toggle(entry.node.isActive,value);
+                              controller.toggle(entry.node.isActive, value);
                             },
                           ),
                         ),
-
-                    ],
-                  ),
+                      ],
+                    ),
+                  ],
                 ),
               ),
             ),
@@ -171,5 +195,6 @@ class MyTreeTile extends GetView<DashboardController> {
         ],
       ),
     );
+
   }
 }

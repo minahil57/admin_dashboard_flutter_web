@@ -1,107 +1,31 @@
-import 'package:flutter_fancy_tree_view/flutter_fancy_tree_view.dart';
 import 'package:get/get.dart';
 import 'package:getx_admin_panel/core/imports/core_imports.dart';
-import 'package:getx_admin_panel/models/tree_node.dart';
 import 'package:getx_admin_panel/views/accounts_tree/accounts_tree_controller.dart';
-import 'package:getx_admin_panel/views/accounts_tree/widgets/add_button.dart';
-import 'package:getx_admin_panel/views/accounts_tree/widgets/my_tree_tile.dart';
-import 'package:getx_admin_panel/views/accounts_tree/widgets/search_bar.dart';
+import 'package:getx_admin_panel/views/accounts_tree/widgets/heading_container.dart';
+import 'package:getx_admin_panel/views/accounts_tree/widgets/top_bar.dart';
+import 'package:getx_admin_panel/views/accounts_tree/widgets/tree.dart';
 
 class AccountsTreeView extends GetView<DashboardController> {
   const AccountsTreeView({super.key});
-  
+
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(DashboardController());
-    return
-    Scaffold(
+
+    return Scaffold(
       backgroundColor: kcWhitecolor.withOpacity(0.9),
-      
-      body: 
-      Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16),
+      body: const Padding(
+        padding: EdgeInsets.symmetric(horizontal: 16),
         child: Column(
           children: [
             verticalSpaceMedium,
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text('Accounts Listing',style: getBoldStyle(fontSize: 24,fontWeight: FontWeight.w500),),
-                  const SearchTextField(),
-                   const CustomButton(),
-                ],
-              ),
-            ),
+            TopBarAccountTree(),
+            verticalSpaceMedium,
+            HeadingContainer(),
             verticalSpaceSmall,
-            Container(
-              margin: const EdgeInsets.symmetric(horizontal: 20),
-              height: 65,
-              decoration: const BoxDecoration(
-                color: kcWhitecolor,
-                boxShadow: [
-                  BoxShadow(
-                    color:kcPrimaryColor,
-                    spreadRadius: 1,
-                    blurRadius: 8,
-                    offset: Offset(0, 0),
-                  ),
-                ],
-
-              ),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text('AccountName',style: getMediumStyle(),),
-                    Text('AccountCode',style: getMediumStyle(),),
-                    Text('AccountBalance',style: getMediumStyle(),),
-                    Text('Accountlevel',style: getMediumStyle(),),
-                    Text('AccountStatus',style: getMediumStyle(),),
-                  ],
-                            ),
-              ),
-            ),
-            verticalSpaceSmall,
-            Expanded(
-
-             child: FutureBuilder<List<MyTreeNode>>(
-                future: controller.getData(),
-
-                builder: (BuildContext context, AsyncSnapshot<List<MyTreeNode>> snapshot) {
-                  late TreeController <MyTreeNode> treeController ;
-                  treeController = TreeController<MyTreeNode>(
-                    roots: snapshot.data!,
-                    childrenProvider: (MyTreeNode node) => node.children,
-                  );
-                  return
-                    snapshot.connectionState == ConnectionState.waiting ?
-                      const CircularProgressIndicator(
-                        color:kcWhitecolor,
-                      ):
-
-                     TreeView<MyTreeNode>(
-                    treeController:treeController,
-                    nodeBuilder: (BuildContext context, TreeEntry<MyTreeNode> entry) {
-                      return
-                        MyTreeTile(
-                          key: ValueKey(entry.node),
-                          entry: entry,
-                          onTap: () => treeController.toggleExpansion(entry.node),
-
-                        );
-                    },
-                  );
-                },
-
-              ),
-            ),
+            AccountsTree(),
           ],
         ),
       ),
     );
   }
 }
-

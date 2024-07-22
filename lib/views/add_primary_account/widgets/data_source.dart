@@ -1,11 +1,7 @@
-import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:getx_admin_panel/core/theme/app_colors.dart';
 import 'package:getx_admin_panel/core/theme/text_style.dart';
-import 'package:getx_admin_panel/models/item_model.dart';
 import 'package:getx_admin_panel/models/tree_node.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 
@@ -40,7 +36,7 @@ class PrimaryAccountSource extends DataGridSource {
         cells: row.getCells().map<Widget>((dataGridCell) {
           // log(dataGridCell.value);
       return  Container(
-        padding: EdgeInsets.symmetric(horizontal: 24),
+        padding: const EdgeInsets.symmetric(horizontal: 24),
         child: dataGridCell.columnName == 'actions' ? UnconstrainedBox(
           alignment: Alignment.topLeft,
               child: Switch(

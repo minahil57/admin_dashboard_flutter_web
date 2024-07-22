@@ -17,6 +17,10 @@ class SideBarController extends GetxController{
                 AdminMenuItem(title: "Accounts Tree", route: "/accounts_tree"),
               ],),
             ],),
+       AdminMenuItem(title: "Ap",  icon: Icons.edit_document,children: [
+         AdminMenuItem(title: "Purchase Voucher", route: "/purchase"),
+       ],),
+
         ];
  int getSideBarItem(AdminMenuItem item, [List<AdminMenuItem>? menuItems, int parentIndex = -1]) {
   menuItems ??= items;
