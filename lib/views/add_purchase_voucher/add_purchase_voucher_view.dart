@@ -13,7 +13,7 @@ import 'package:getx_admin_panel/views/add_purchase_voucher/common_widgets/image
 import 'package:getx_admin_panel/views/add_purchase_voucher/web_view/payment_voucher_form.dart';
 import 'package:getx_admin_panel/views/add_purchase_voucher/common_widgets/row_grid.dart';
 import 'package:getx_admin_panel/views/add_purchase_voucher/web_view/top_bar_add_purchase_voucher.dart';
-import 'package:getx_admin_panel/views/editable_table.dart';
+import 'package:getx_admin_panel/views/add_purchase_voucher/common_widgets/editable_table.dart';
 import 'package:getx_admin_panel/widgets/semiRounded_button.dart';
 
 import 'mobile_view/top_bar_mobile_view.dart';
@@ -51,7 +51,11 @@ class PurchaseVoucherView extends GetView<AddPurchaseController> {
                     ),
                     verticalSpaceMedium,
                     const VoucherItemsDataGrid(),
-                    const PlutoTable(),
+                    verticalSpaceMedium,
+
+                    PlutoTable(
+
+                    ),
                   ],
                 ),
               ),
@@ -82,7 +86,11 @@ class PurchaseVoucherView extends GetView<AddPurchaseController> {
                     const AddNewRowForm(),
                     verticalSpaceMedium,
                     const VoucherItemsDataGrid(),
-                    const PlutoTable(),
+                    verticalSpaceMedium,
+
+                    PlutoTable(
+
+                    ),
                   ],
                 ),
               ),
@@ -116,7 +124,10 @@ class PurchaseVoucherView extends GetView<AddPurchaseController> {
                     verticalSpaceMedium,
 
                     const VoucherItemsDataGrid(),
-                    const PlutoTable(),
+                    verticalSpaceMedium,
+                     PlutoTable(
+
+                    ),
                   ],
                 ),
               ),

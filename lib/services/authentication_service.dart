@@ -18,6 +18,7 @@ class AuthenticationService {
     const password = '12345678';
     try {
       // EasyLoading.show();
+      log('I am trying');
       final response = await dio.post(
         url,
         options: Options(

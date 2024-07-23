@@ -1,14 +1,17 @@
-import 'dart:developer';
+import 'dart:developer' as dv;
 import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_dropzone/flutter_dropzone.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:getx_admin_panel/core/imports/core_imports.dart';
 import 'package:getx_admin_panel/models/item_model.dart';
 import 'package:getx_admin_panel/models/purcahse_voucher_model.dart';
+import 'package:getx_admin_panel/models/purchase_voucher_dropdowns.dart';
 import 'package:getx_admin_panel/models/voucher_items.dart';
 import 'package:getx_admin_panel/services/account_tree_service.dart';
+import 'package:getx_admin_panel/services/purchase_voucher_service.dart';
 import 'package:getx_admin_panel/views/add_purchase_voucher/common_widgets/data_source.dart';
 import 'package:getx_admin_panel/views/item_master/item_master_controller.dart';
 import 'package:getx_admin_panel/widgets/rounded_text_field.dart';
@@ -16,6 +19,7 @@ import 'package:getx_admin_panel/widgets/semiRounded_button.dart';
 import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mime/mime.dart';
+import 'package:pluto_grid/pluto_grid.dart';
 
 import '../../widgets/rounded_drop_down.dart';
 
@@ -34,7 +38,27 @@ class AddPurchaseController extends GetxController {
   String message2 = 'Drop something here';
   bool highlighted1 = false;
   RxBool isFirstRowValue = true.obs;
+  List<Account> accounts = [];
+  List<CostCenter> cc1 = [];
+  List<CostCenter> cc2 = [];
+  List<CostCenter> cc3 = [];
+  List<CostCenter> cc4 = [];
+  List<Currency> currencies = [];
+  List<Supplier> suppliers = [];
+  List<Tax> taxes = [];
+  List<Type> types = [];
+  List<Voucher> vouchers = [];
+  List<String> accNums = [];
+  List<String> accNames = [];
 
+  // Separate lists for CostCenter names
+  List<String> cc1Names = [];
+  List<String> cc2Names = [];
+  List<String> cc3Names = [];
+  List<String> cc4Names = [];
+ late RxList<PlutoColumn> columns;
+ late RxList<PlutoRow> rows;
+  final PurchaseVoucherService purchaseVoucherService = PurchaseVoucherService();
 
   final TextEditingController voucherNoController = TextEditingController();
   final TextEditingController voucherDateController = TextEditingController();
@@ -71,12 +95,147 @@ class AddPurchaseController extends GetxController {
   final TextEditingController rowCostCenter4Controller =
       TextEditingController();
   final TextEditingController rownarrationController = TextEditingController();
+  // var  stateManager = Rx<PlutoGridStateManager?>(null);
 
-  @override
-  void onInit() {
-    voucherItemsSource = VoucherItemsSource();
-    super.onInit();
+  var voucherItemsSource = Rx<VoucherItemsSource?>(null);
+
+@override
+  void onInit() async {
+  super.onInit();
+
+
+  try {
+
+    voucherItemsSource.value = VoucherItemsSource([], [], [], [], [], []);
+    columns = <PlutoColumn>[].obs;
+    rows=<PlutoRow>[].obs;
+
+    await fetchAllDropDowns(); // Assuming fetchAllDropDowns is an async method
+
+    // Proper initialization after data is fetched
+    voucherItemsSource.value = VoucherItemsSource(accNums, accNames, cc1Names, cc2Names, cc3Names, cc4Names);
+    columns = <PlutoColumn>[
+      PlutoColumn(
+        title: 'Account Code',
+        field: 'account_code',
+        type: PlutoColumnType.select(accNums,enableColumnFilter: true),
+        enableRowDrag: true,
+      ),
+      PlutoColumn(
+        title: 'Account Name',
+        field: 'account_name',
+        type: PlutoColumnType.select(accNames,enableColumnFilter: true),
+      ),
+      PlutoColumn(
+        title: 'Debit',
+        field: 'debit',
+        type: PlutoColumnType.number(),
+      ),
+      PlutoColumn(
+        title: 'Tax',
+        field: 'tax',
+        type: PlutoColumnType.number(),
+      ),
+      PlutoColumn(
+        title: 'VAT',
+        field: 'vat',
+        type: PlutoColumnType.number(),
+        footerRenderer: (rendererContext) {
+          return PlutoAggregateColumnFooter(
+            rendererContext: rendererContext,
+            type: PlutoAggregateColumnType.count,
+            format: '#,###',
+            alignment: Alignment.center,
+            titleSpanBuilder: (text) {
+              return [
+                const TextSpan(text: 'Total Sum'),
+                // TextSpan(text: text),
+              ];
+            },
+          );
+        },
+      ),
+      PlutoColumn(
+        title: 'Total Narration',
+        field: 'total_narration',
+        type: PlutoColumnType.number(),
+        footerRenderer: (rendererContext) {
+          return PlutoAggregateColumnFooter(
+            rendererContext: rendererContext,
+            type: PlutoAggregateColumnType.sum,
+            format: '#,###',
+            alignment: Alignment.center,
+            titleSpanBuilder: (text) {
+              return [
+                // const TextSpan(
+                //   text: 'Sum',
+                //   style: TextStyle(color: Colors.red),
+                // ),
+                // const TextSpan(text: ' : '),
+                TextSpan(text: text),
+              ];
+            },
+          );
+        },
+      ),
+      PlutoColumn(
+        title: 'Cost center 1',
+        field: 'cost_center_1',
+
+        type: PlutoColumnType.select(cc1Names, enableColumnFilter: true),
+      ),
+      PlutoColumn(
+        title: 'Cost center 2',
+        field: 'cost_center_2',
+        type: PlutoColumnType.select(cc2Names, enableColumnFilter: true,),
+      ),
+      PlutoColumn(
+        title: 'Cost center 3',
+        field: 'cost_center_3',
+        type: PlutoColumnType.select(cc3Names, enableColumnFilter: true,),
+      ),
+      PlutoColumn(
+        title: 'Cost center 4',
+        field: 'cost_center_4',
+        type: PlutoColumnType.select(cc4Names, enableColumnFilter: true,),
+      ),
+    ].obs;
+    rows = [
+      PlutoRow(
+        cells: {
+          'account_code': PlutoCell(value: '0123223'),
+          'account_name': PlutoCell(value: 'Yasir Groups Limited'),
+          'debit': PlutoCell(value: 0.00),
+          'tax': PlutoCell(value: 0.00),
+          'vat': PlutoCell(value: 0.00),
+          'total_narration': PlutoCell(value: 2500.00),
+          'cost_center_1': PlutoCell(value: 'CC1.1'),
+          'cost_center_2': PlutoCell(value: 'CC2.3'),
+          'cost_center_3': PlutoCell(value: 'CC3.1'),
+          'cost_center_4': PlutoCell(value: 'CC4.2'),
+        },
+      ),
+    ].obs;
+    refresh();
+    update();
+  } catch (e) {
+    // Handle errors if fetchAllDropDowns fails
+    print("Error fetching dropdown data: $e");
   }
+}
+
+  void handleOnRowChecked(PlutoGridOnRowCheckedEvent event) {
+    if (event.isRow) {
+      // or event.isAll
+      print('Toggled A Row.');
+      print(event.row?.cells['column1']?.value);
+    } else {
+      print('Toggled All Rows.');
+      // print(stateManager.value!.checkedRows.length);
+    }
+  }
+
+
 
   Future<void> pickImages() async {
     final ImagePicker picker = ImagePicker();
@@ -108,7 +267,6 @@ class AddPurchaseController extends GetxController {
   // RxList<VoucherItems> voucherItemData = <VoucherItems>[
   //   VoucherItems(recordId: 000 , accountCode: '', accountName: '', taxCode: 000 , amountCredit: 000 , amountDebit: 000 , vat: 000 , total: 000 , conRate: 000 , conAmount: 000 , narration: '', costCenter1: '', costCenter2: '', costCenter3: '', costCenter4: '',),
   // ].obs;
-  late VoucherItemsSource voucherItemsSource ;
 
 
   void onAddRowFormPress(BuildContext context) {
@@ -149,6 +307,40 @@ class AddPurchaseController extends GetxController {
 
     context.go('/item_master');
   }
+  Future<void> fetchAllDropDowns() async {
+    try {
+      EasyLoading.show();
+      ApiResponse apiResponse = await  purchaseVoucherService.fetchPurchaseDropdownsData();
+
+          // Assign each value to a separate list
+           accounts = apiResponse.accounts;
+           cc1 = apiResponse.cc1;
+          cc2 = apiResponse.cc2;
+          cc3 = apiResponse.cc3;
+           cc4 = apiResponse.cc4;
+           currencies = apiResponse.currencies;
+          suppliers = apiResponse.suppliers;
+           taxes = apiResponse.taxes;
+           types = apiResponse.types;
+          vouchers = apiResponse.vouchers;
+
+       accNums = accounts.map((account) => account.id).toList();
+       accNames = accounts.map((account) => account.name).toList();
+
+      // Separate lists for CostCenter names
+       cc1Names = cc1.map((costCenter) => costCenter.name).toList();
+     cc2Names = cc2.map((costCenter) => costCenter.name).toList();
+      cc3Names = cc3.map((costCenter) => costCenter.name).toList();
+       cc4Names = cc4.map((costCenter) => costCenter.name).toList();
+
+       dv.log(cc4Names.length.toString());
+      EasyLoading.dismiss();
+    } catch (e) {
+      EasyLoading.dismiss();
+          print('Failed to fetch data: $e');
+        }
+      }
+
 
 
   TextEditingController getController(String label) {

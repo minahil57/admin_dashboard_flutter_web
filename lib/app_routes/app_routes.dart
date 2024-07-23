@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:getx_admin_panel/views/accounts_tree/accounts_tree.dart';
 import 'package:getx_admin_panel/views/add_primary_account/add_primary_account.dart';
 import 'package:getx_admin_panel/views/dashboard/dashboard_view.dart';
-import 'package:getx_admin_panel/views/editable_table.dart';
+import 'package:getx_admin_panel/views/add_purchase_voucher/common_widgets/editable_table.dart';
 import 'package:getx_admin_panel/views/reports/reports_view.dart';
 import 'package:getx_admin_panel/views/sales/sales_view.dart';
 import 'package:getx_admin_panel/views/side_bar/side_bar_view.dart';

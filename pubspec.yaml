@@ -50,8 +50,6 @@ dependencies:
   flutter_svg: ^2.0.10+1
 #  https://pub.dev/packages/flutter_dropzone
   flutter_dropzone: ^4.0.1
-
-
 #https://pub.dev/packages/pluto_grid
   pluto_grid: ^8.0.0
 #  https://pub.dev/packages/animated_custom_dropdown

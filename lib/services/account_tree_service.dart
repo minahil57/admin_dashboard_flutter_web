@@ -23,7 +23,7 @@ class ItemMasterService{
 
   Future<List<MyTreeNode>> getAccountTree() async {
     final url = '${StringManager.startingUrl}/finanace/accounttrees/getaccounttree';
-    const db = 'ePMS3001';
+
 
     log('I am here');
     try {
@@ -39,7 +39,7 @@ class ItemMasterService{
             'accept': '*/*',
             'apikey': StringManager.apiKey,
             'Authorization': 'Bearer ${userData!.data.accessToken}',
-            'db': db,
+            'db': StringManager.db,
             'lang': StringManager.lang,
             'Content-Type': 'application/json',
           },

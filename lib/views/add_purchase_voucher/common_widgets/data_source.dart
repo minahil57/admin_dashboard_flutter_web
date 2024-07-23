@@ -1,47 +1,36 @@
 import 'package:animated_custom_dropdown/custom_dropdown.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:getx_admin_panel/core/constants/side_bar_items.dart';
-import 'package:getx_admin_panel/core/helpers/ui_helpers.dart';
+
 import 'package:getx_admin_panel/core/imports/core_imports.dart';
-import 'package:getx_admin_panel/core/theme/text_style.dart';
-import 'package:getx_admin_panel/models/item_model.dart';
-import 'package:getx_admin_panel/models/purcahse_voucher_model.dart';
+
 import 'package:getx_admin_panel/models/voucher_items.dart';
-import 'package:getx_admin_panel/views/add_purchase_voucher/add_purchase_voucher_controller.dart';
+
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 import 'dart:math';
-import 'package:flutter/material.dart';
-import 'package:syncfusion_flutter_datagrid/datagrid.dart';
-
-///Dart import
-// ignore_for_file: depend_on_referenced_packages
-
-import 'dart:math';
-
-import 'package:collection/collection.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:getx_admin_panel/core/imports/core_imports.dart';
-import 'package:getx_admin_panel/models/dealer.dart';
 import 'package:intl/intl.dart';
-import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 
-/// Set dealer's data collection to data grid source.
 class VoucherItemsSource extends DataGridSource {
-  /// Creates the dealer data source class with required details.
-  VoucherItemsSource() {
+
+  VoucherItemsSource(this.accNums, this.accNames, this.cc1Names, this.cc2Names, this.cc3Names, this.cc4Names) {
+
     textStyle = const TextStyle(
         fontFamily: 'Roboto',
         fontWeight: FontWeight.w400,
         fontSize: 14,
         color: Colors.black87);
 
-    items = _getDealerDetails(100);
+    items = _getDealerDetails(5);
     buildDataGridRows();
   }
+  final List<String> accNums  ;
+  final List<String> accNames ;
 
+  // Separate lists for CostCenter names
+  final List<String> cc1Names ;
+  final List<String> cc2Names;
+  final List<String> cc3Names ;
+  final List<String> cc4Names ;
   late List<VoucherItems> items;
 
   late List<DataGridRow> dataGridRows;
@@ -77,17 +66,17 @@ class VoucherItemsSource extends DataGridSource {
       String value = dataGridCell.value.toString();
 
       if (dataGridCell.columnName == 'debit') {
-        value = NumberFormat.currency(locale: 'en_US', symbol: r'AE')
+        value = NumberFormat.currency(locale: 'ar_UAE', symbol: r'AE')
             .format(dataGridCell.value);
       } else if (dataGridCell.columnName == 'tax' ||
           dataGridCell.columnName == 'vat') {
-        value = NumberFormat.currency(locale: 'en_US', symbol: r'%')
+        value = NumberFormat.percentPattern('en_US')
             .format(dataGridCell.value);
       }
 
       return Container(
         padding: const EdgeInsets.all(8.0),
-        alignment: isRightAlign ? Alignment.centerRight : Alignment.centerLeft,
+        alignment:  Alignment.centerLeft,
         child: Text(
           value,
           overflow: TextOverflow.ellipsis,
@@ -99,7 +88,7 @@ class VoucherItemsSource extends DataGridSource {
   @override
   Widget? buildEditWidget(DataGridRow dataGridRow,
       RowColumnIndex rowColumnIndex, GridColumn column, CellSubmit submitCell) {
-    // Text going to display on editable widget
+
     final String displayText = dataGridRow
             .getCells()
             .firstWhereOrNull((DataGridCell dataGridCell) =>
@@ -114,22 +103,22 @@ class VoucherItemsSource extends DataGridSource {
     newCellValue = null;
 
     if (column.columnName == 'accountName') {
-      return _buildDropDownWidget(displayText, submitCell, _shipCountry);
+      return _buildDropDownWidget(displayText, submitCell, accNames);
     } else if (column.columnName == 'accountCode') {
       return _buildDropDownWidget(
-          displayText , submitCell, _shipCountry);
+          displayText , submitCell, accNums);
     } else if (column.columnName == 'costCenter3') {
       return _buildDropDownWidget(
-          displayText , submitCell, _shipCountry);
+          displayText , submitCell, cc3Names);
     } else if (column.columnName == 'costCenter1') {
       return _buildDropDownWidget(
-          displayText , submitCell, _shipCountry);
+          displayText , submitCell, cc1Names);
     } else if (column.columnName == 'costCenter2') {
       return _buildDropDownWidget(
-          displayText, submitCell, _shipCountry);
+          displayText, submitCell, cc2Names);
     } else if (column.columnName == 'costCenter4') {
       return _buildDropDownWidget(
-          displayText , submitCell, _shipCountry);
+          displayText , submitCell, cc4Names);
     } else {
       return _buildTextFieldWidget(displayText, column, submitCell);
     }
@@ -226,7 +215,7 @@ class VoucherItemsSource extends DataGridSource {
             contentPadding: const EdgeInsets.fromLTRB(0, 0, 0, 16.0),
             focusedBorder: UnderlineInputBorder(
                 borderSide: BorderSide(color: kcPrimaryColor))),
-        style: textStyle,
+        style: getRegularStyle(),
         cursorColor: kcPrimaryColor,
         inputFormatters: <TextInputFormatter>[
           FilteringTextInputFormatter.allow(regExp)
@@ -299,7 +288,7 @@ class VoucherItemsSource extends DataGridSource {
             child: Text(
               displayText,
               textAlign: TextAlign.right,
-              style: textStyle,
+              style: getRegularStyle(),
             ),
           ),
         );
@@ -314,13 +303,20 @@ class VoucherItemsSource extends DataGridSource {
 
   /// Building a [DropDown] for combo box column.
   Widget _buildDropDownWidget(
-      String displayText, CellSubmit submitCell, List<String> items) {
+      String displayText, CellSubmit submitCell, List<dynamic> items) {
     return Container(
       // padding: const EdgeInsets.all(8.0),
       alignment: Alignment.centerLeft,
-      child: CustomDropdown<String>.search(
+      child: CustomDropdown<dynamic>.search(
+        decoration: CustomDropdownDecoration(
+          listItemStyle: getRegularStyle(
+          ),
+          hintStyle: getRegularStyle(),
+          headerStyle: getRegularStyle(
+          ),
+        ),
         items: items,
-        onChanged: (String? newValue) {
+        onChanged: (dynamic? newValue) {
           newCellValue = newValue ?? '';
         },
 
@@ -340,8 +336,8 @@ class VoucherItemsSource extends DataGridSource {
       final List<String> selectedShipCities = _shipCity[selectedShipCountry]!;
       final VoucherItems ord = VoucherItems(
         _productNo[random.nextInt(15)],
-        selectedShipCountry,
-        selectedShipCountry,
+        '',
+        '',
         _productNo[random.nextInt(15)],
         _productNo[random.nextInt(15)],
         _productNo[random.nextInt(15)],
@@ -349,11 +345,11 @@ class VoucherItemsSource extends DataGridSource {
         _productNo[random.nextInt(15)].toDouble(),
         _productNo[random.nextInt(15)],
         _productNo[random.nextInt(15)],
-        selectedShipCountry,
-        selectedShipCountry,
-        selectedShipCountry,
-        selectedShipCountry,
-        selectedShipCountry,
+       '',
+        '',
+        '',
+        '',
+            '',
       );
       itemDetails.add(ord);
     }
@@ -534,6 +530,27 @@ class VoucherItemsSource extends DataGridSource {
   ];
 
   final List<String> _shipCountry = <String>[
+    'Argentina',
+    'Austria',
+    'Belgium',
+    'Brazil',
+    'Canada',
+    'Denmark',
+    'Finland',
+    'France',
+    'Germany',
+    'Ireland',
+    'Italy',
+    'Mexico',
+    'Norway',
+    'Poland',
+    'Portugal',
+    'Spain',
+    'Sweden',
+    'UK',
+    'USA',
+  ];
+  final List<String> _accName = <String>[
     'Argentina',
     'Austria',
     'Belgium',
