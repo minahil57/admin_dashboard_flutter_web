@@ -2,10 +2,9 @@ import 'dart:math';
 
 import 'package:get/get.dart';
 import 'package:getx_admin_panel/core/imports/core_imports.dart';
-import 'package:getx_admin_panel/models/purcahse_voucher_model.dart';
 import 'package:getx_admin_panel/models/voucher_items.dart';
 import 'package:getx_admin_panel/views/add_purchase_voucher/add_purchase_voucher_controller.dart';
-import 'package:getx_admin_panel/widgets/rounded_text_field.dart';
+import 'package:getx_admin_panel/widgets/rounded_text_field_with_top_label.dart';
 import 'package:getx_admin_panel/widgets/semiRounded_button.dart';
 
 import '../../../widgets/rounded_drop_down.dart';
@@ -96,13 +95,13 @@ class AddNewRowForm extends StatelessWidget {
             horizontalSpaceMedium,
             RoundedDropDownField(
               label: 'Cost Center 2',
-              items: controller.getItems('Cost Center 4'),
+              items: controller.getItems('Cost Center 2'),
               controller: controller.rowCostCenter2Controller,
             ),
             horizontalSpaceMedium,
             RoundedDropDownField(
               label: 'Cost Center 3',
-              items: controller.getItems('Cost Center 4'),
+              items: controller.getItems('Cost Center 3'),
               controller: controller.rowCostCenter3Controller,
             ),
             horizontalSpaceMedium,

@@ -3,11 +3,10 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:dio/dio.dart';
 import 'package:getx_admin_panel/core/constants/string_manager.dart';
 import 'package:getx_admin_panel/services/authentication_service.dart';
-import 'package:getx_admin_panel/user_data/current_userDetail.dart';
+import 'package:getx_admin_panel/user_data/current_user_detail.dart';
 
 import '../core/dio_instance.dart';
 import '../models/tree_node.dart';
-import '../models/user_model.dart';
 
 class ItemMasterService{
   List<MyTreeNode> accounts = [];

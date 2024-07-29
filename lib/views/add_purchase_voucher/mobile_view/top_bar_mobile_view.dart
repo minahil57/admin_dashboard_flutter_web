@@ -1,4 +1,3 @@
-import 'package:getx_admin_panel/widgets/semiRounded_button.dart';
 
 import '../../../core/imports/core_imports.dart';
 
@@ -17,16 +16,16 @@ class TopBarAddPurchaseVoucherMobileView extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-           IconButton(onPressed: (){}, icon: Icon(Icons.query_builder,
+           IconButton(onPressed: (){}, icon: const Icon(Icons.query_builder,
              semanticLabel: 'Query',
            ),),
             horizontalSpaceSmall,
-            IconButton(onPressed: (){}, icon: Icon(Icons.edit,
+            IconButton(onPressed: (){}, icon: const Icon(Icons.edit,
               semanticLabel: 'Edit',
             ),
             ),
             horizontalSpaceSmall,
-            IconButton(onPressed: (){}, icon: Icon(Icons.add_circle_outline,
+            IconButton(onPressed: (){}, icon: const Icon(Icons.add_circle_outline,
               semanticLabel: 'Add',
             ),),
           ],

@@ -2,7 +2,7 @@ import 'package:getx_admin_panel/core/imports/core_imports.dart';
 import 'package:getx_admin_panel/core/imports/external_imports.dart';
 import 'package:getx_admin_panel/models/tree_node.dart';
 import 'package:getx_admin_panel/views/add_primary_account/add_primary_account_controller.dart';
-import 'package:getx_admin_panel/widgets/rounded_text_field.dart';
+import 'package:getx_admin_panel/widgets/rounded_text_field_with_top_label.dart';
 import 'package:getx_admin_panel/widgets/semi_rounded_elevated_button.dart';
 
 class MyForm extends GetView<AddPrimaryAccountController> {
@@ -45,7 +45,7 @@ class MyForm extends GetView<AddPrimaryAccountController> {
                       accountCode: '11010001',
                       balance: 0.00,
                       level: 1,
-                      isActive: false,
+                      isActive: false.obs,
                       balanceType: 'Debit',
                       description: controller.descriptionController.text,
                       accType: controller.accountTypeController.text,

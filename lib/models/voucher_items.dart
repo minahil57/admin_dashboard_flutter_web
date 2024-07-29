@@ -54,23 +54,23 @@ class VoucherItems {
   // }
 
   Map<String, dynamic> toJson() {
-    final _data = <String, dynamic>{};
-    _data['recordId'] = recordId;
-    _data['accountCode'] = accountCode;
-    _data['accountName'] = accountName;
-    _data['taxCode'] = taxCode;
-    _data['amountCredit'] = amountCredit;
-    _data['amountDebit'] = amountDebit;
-    _data['vat'] = vat;
-    _data['total'] = total;
-    _data['conRate'] = conRate;
-    _data['conAmount'] = conAmount;
-    _data['narration'] = narration;
-    _data['costCenter1'] = costCenter1;
-    _data['costCenter2'] = costCenter2;
-    _data['costCenter3'] = costCenter3;
-    _data['costCenter4'] = costCenter4;
-    return _data;
+    final data = <String, dynamic>{};
+    data['recordId'] = recordId;
+    data['accountCode'] = accountCode;
+    data['accountName'] = accountName;
+    data['taxCode'] = taxCode;
+    data['amountCredit'] = amountCredit;
+    data['amountDebit'] = amountDebit;
+    data['vat'] = vat;
+    data['total'] = total;
+    data['conRate'] = conRate;
+    data['conAmount'] = conAmount;
+    data['narration'] = narration;
+    data['costCenter1'] = costCenter1;
+    data['costCenter2'] = costCenter2;
+    data['costCenter3'] = costCenter3;
+    data['costCenter4'] = costCenter4;
+    return data;
   }
 
   DataGridRow getDataGridRow() {
@@ -106,10 +106,10 @@ class VoucherAttachments {
   }
 
   Map<String, dynamic> toJson() {
-    final _data = <String, dynamic>{};
-    _data['recordId'] = recordId;
-    _data['fileName'] = fileName;
-    _data['description'] = description;
-    return _data;
+    final data = <String, dynamic>{};
+    data['recordId'] = recordId;
+    data['fileName'] = fileName;
+    data['description'] = description;
+    return data;
   }
 }

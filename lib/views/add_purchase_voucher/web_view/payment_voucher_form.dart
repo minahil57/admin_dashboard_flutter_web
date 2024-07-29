@@ -3,7 +3,7 @@ import 'package:getx_admin_panel/core/imports/core_imports.dart';
 import 'package:getx_admin_panel/views/add_purchase_voucher/add_purchase_voucher_controller.dart';
 import 'package:getx_admin_panel/widgets/expanded_textForm_field.dart';
 import 'package:getx_admin_panel/widgets/rounded_drop_down.dart';
-import 'package:getx_admin_panel/widgets/rounded_text_field.dart';
+import 'package:getx_admin_panel/widgets/rounded_text_field_with_top_label.dart';
 import 'package:getx_admin_panel/widgets/semi_rounded_elevated_button.dart';
 
 class PaymentVoucherForm extends GetView<AddPurchaseController> {
@@ -13,7 +13,8 @@ class PaymentVoucherForm extends GetView<AddPurchaseController> {
   Widget build(BuildContext context) {
     final itemController = Get.put(AddPurchaseController());
 
-    return Container(
+    return
+      Container(
       padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 36),
       decoration: BoxDecoration(
         color: kcWhitecolor,
@@ -23,7 +24,7 @@ class PaymentVoucherForm extends GetView<AddPurchaseController> {
           BoxShadow(color: kcPrimaryColor, spreadRadius: 0.5, blurRadius: 1),
         ],
       ),
-      child: Row(
+      child:   Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           SizedBox(
@@ -144,11 +145,13 @@ class PaymentVoucherForm extends GetView<AddPurchaseController> {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
               children: [
-                RoundedDropDownField(
-                  label: 'Cost Center 1',
-                  items: itemController.getItems('Cost Center 1'),
-                  controller: itemController.getController('Cost Center 1'),
-                ),
+
+                  RoundedDropDownField(
+                    label: 'Cost Center 1',
+                    items: itemController.cc1Names,
+                    controller: itemController.getController('Cost Center 1'),
+                  ),
+
                 verticalSpaceMedium,
                 RoundedDropDownField(
                   label: 'Cost Center 2',
@@ -188,6 +191,15 @@ class PaymentVoucherForm extends GetView<AddPurchaseController> {
                   ],
                 ),
                 verticalSpaceMedium,
+                // SearchableDropdownRenderer(
+                //   context: context, items: const ['Minahil','Kumail','Minahil Akhtar'], text: 'Type',
+                //   onChanged: (String? value){
+                //     value =value;
+                // },
+
+
+
+                // ),
                 ExpandedTextFormField(
                   label: 'Narration',
                   width: MediaQuery.sizeOf(context).width,

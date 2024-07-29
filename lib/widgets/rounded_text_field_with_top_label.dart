@@ -95,7 +95,7 @@ class RoundedTextField extends StatelessWidget {
                       }
                     },
                   )
-                      : suffixIcon ?? null,
+                      : suffixIcon,
                 ),
               ),
 

@@ -54,8 +54,12 @@ dependencies:
   pluto_grid: ^8.0.0
 #  https://pub.dev/packages/animated_custom_dropdown
   animated_custom_dropdown: ^3.1.1
+#https://pub.dev/packages/pluto_grid_export
+#  pluto_grid_export: ^1.0.5
 
-
+  collection: any
+  intl: any
+  mime: any
 dev_dependencies:
   flutter_test:
     sdk: flutter

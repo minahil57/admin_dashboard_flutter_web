@@ -1,10 +1,9 @@
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:getx_admin_panel/core/imports/core_imports.dart';
 import 'package:getx_admin_panel/views/add_purchase_voucher/add_purchase_voucher_controller.dart';
 import 'package:getx_admin_panel/widgets/expanded_textForm_field.dart';
 import 'package:getx_admin_panel/widgets/rounded_drop_down.dart';
-import 'package:getx_admin_panel/widgets/rounded_text_field.dart';
+import 'package:getx_admin_panel/widgets/rounded_text_field_with_top_label.dart';
 import 'package:getx_admin_panel/widgets/semi_rounded_elevated_button.dart';
 
 class PaymentVoucherFormMobileView extends GetView<AddPurchaseController> {

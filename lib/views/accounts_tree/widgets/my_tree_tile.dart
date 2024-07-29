@@ -25,12 +25,12 @@ class MyTreeTile extends GetView<DashboardController> {
           text: text,
           style: entry.node.level == 1
               ? getBoldStyle(
-            fontSize: 18,
-            fontWeight: FontWeight.w600,
-          )
+                  fontSize: 18,
+                  fontWeight: FontWeight.w600,
+                )
               : getRegularStyle(
-            fontSize: getResponsiveSmallFontSize(context),
-          ),
+                  fontSize: getResponsiveSmallFontSize(context),
+                ),
         );
       }
       final matches = RegExp(query, caseSensitive: false).allMatches(text);
@@ -39,12 +39,12 @@ class MyTreeTile extends GetView<DashboardController> {
           text: text,
           style: entry.node.level == 1
               ? getBoldStyle(
-            fontSize: 18,
-            fontWeight: FontWeight.w600,
-          )
+                  fontSize: 18,
+                  fontWeight: FontWeight.w600,
+                )
               : getRegularStyle(
-            fontSize: getResponsiveSmallFontSize(context),
-          ),
+                  fontSize: getResponsiveSmallFontSize(context),
+                ),
         );
       }
       final List<TextSpan> spans = [];
@@ -55,16 +55,15 @@ class MyTreeTile extends GetView<DashboardController> {
             text: text.substring(start, match.start),
             style: entry.node.level == 1
                 ? getBoldStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.w600,
-            )
+                    fontSize: 18,
+                    fontWeight: FontWeight.w600,
+                  )
                 : getRegularStyle(
-              fontSize: getResponsiveSmallFontSize(context),
-            ),
+                    fontSize: getResponsiveSmallFontSize(context),
+                  ),
           ));
         }
-        spans.add(
-            TextSpan(
+        spans.add(TextSpan(
           text: text.substring(match.start, match.end),
           style: TextStyle(
             backgroundColor: Colors.yellow, // Highlight color
@@ -99,13 +98,15 @@ class MyTreeTile extends GetView<DashboardController> {
               ),
               child: GestureDetector(
                 onTap: onTap,
-                onDoubleTap: (){controller.showContextMenu(context);},
+                onDoubleTap: () {
+                  controller.showContextMenu(context,entry.node);
+                },
                 child: Table(
                   columnWidths: const {
                     0: FlexColumnWidth(),
                     1: FixedColumnWidth(230), // Account code column
                     2: FixedColumnWidth(250), // Balance column
-                    3: FixedColumnWidth(80),  // Level column
+                    3: FixedColumnWidth(80), // Level column
                     4: FixedColumnWidth(80),
                   },
                   // textBaseline: TextBaseline.ideographic,
@@ -118,21 +119,23 @@ class MyTreeTile extends GetView<DashboardController> {
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             Icon(
-                              controller.treeController.getExpansionState(entry.node) &&
-                                  entry.node.children.isNotEmpty
+                              controller.treeController
+                                          .getExpansionState(entry.node) &&
+                                      entry.node.children.isNotEmpty
                                   ? Icons.keyboard_arrow_down
                                   : entry.node.children.isEmpty
-                                  ? Icons.keyboard_control
-                                  : Icons.keyboard_arrow_right,
+                                      ? Icons.keyboard_control
+                                      : Icons.keyboard_arrow_right,
                               color: kcBlackColor,
                               size: 18,
                             ),
                             // const SizedBox(width: 8),
                             Flexible(
                               flex: 2,
-                              child:Obx(()
-                                => RichText(
-                                  text: highlightText(entry.node.accountName, controller.searchQuery.value),
+                              child: Obx(
+                                () => RichText(
+                                  text: highlightText(entry.node.accountName,
+                                      controller.searchQuery.value),
                                 ),
                               ),
                             ),
@@ -142,7 +145,8 @@ class MyTreeTile extends GetView<DashboardController> {
                           entry.node.accountCode,
                           overflow: TextOverflow.ellipsis,
                           maxLines: 1,
-                          style: getRegularStyle(fontSize: getResponsiveSmallFontSize(context)),
+                          style: getRegularStyle(
+                              fontSize: getResponsiveSmallFontSize(context)),
                         ),
                         Text(
                           '${entry.node.balance}',
@@ -154,35 +158,41 @@ class MyTreeTile extends GetView<DashboardController> {
                             color: entry.node.balance > 0
                                 ? kcGreenColor
                                 : entry.node.balance == 0.00
-                                ? Colors.blueAccent
-                                : kcRedColor,
+                                    ? Colors.blueAccent
+                                    : kcRedColor,
                           ),
                         ),
                         Text(
                           '${entry.node.level}',
                           overflow: TextOverflow.ellipsis,
                           maxLines: 1,
-                          style: getRegularStyle(fontSize: getResponsiveSmallFontSize(context)),
+                          style: getRegularStyle(
+                              fontSize: getResponsiveSmallFontSize(context)),
                         ),
                         UnconstrainedBox(
-                          child: Switch(
-                            value: entry.node.isActive,
-                            activeColor: kcPrimaryColor,
-                            activeTrackColor: kcWhitecolor,
-                            inactiveTrackColor: kcWhitecolor,
-                            inactiveThumbColor: kcPrimaryColor,
-                            trackOutlineColor:
-                            WidgetStateProperty.resolveWith<Color?>(
-                                  (Set<WidgetState> states) {
-                                if (states.contains(WidgetState.disabled)) {
+                          child: Obx(
+                            () => Switch(
+                              value: entry.node.isActive.value,
+                              activeColor: kcPrimaryColor,
+                              activeTrackColor: kcWhitecolor,
+                              inactiveTrackColor: kcWhitecolor,
+                              inactiveThumbColor: kcPrimaryColor,
+                              trackOutlineColor:
+                                  WidgetStateProperty.resolveWith<Color?>(
+                                (Set<WidgetState> states) {
+                                  if (states.contains(WidgetState.disabled)) {
+                                    return kcPrimaryColor;
+                                  }
                                   return kcPrimaryColor;
-                                }
-                                return kcPrimaryColor;
+                                },
+                              ),
+                              onChanged: (value) {
+                                _showConfirmationDialog(
+                                    context,
+                                    entry.node.isActive,
+                                    entry.node.accountName);
                               },
                             ),
-                            onChanged: (value) {
-                              controller.toggle(entry.node.isActive, value);
-                            },
                           ),
                         ),
                       ],
@@ -195,6 +205,48 @@ class MyTreeTile extends GetView<DashboardController> {
         ],
       ),
     );
+  }
 
+  void _showConfirmationDialog(
+      BuildContext context, RxBool isActive, String title) {
+    bool currentValue = isActive.value;
+
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text('Confirm'),
+          content: Text(
+            'Are you sure you want to ${currentValue ? 'deactivate' : 'activate'} $title?',
+            style: getRegularStyle(),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text(
+                'No',
+                style: getRegularStyle(
+                  color: currentValue ? kcGreenColor : kcRedColor,
+                ),
+              ),
+            ),
+            TextButton(
+              onPressed: () {
+                controller.toggle(isActive);
+                Navigator.of(context).pop();
+              },
+              child: Text(
+                'Yes',
+                style: getRegularStyle(
+                  color: currentValue ? kcRedColor : kcGreenColor,
+                ),
+              ),
+            ),
+          ],
+        );
+      },
+    );
   }
 }

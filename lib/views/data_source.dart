@@ -1,10 +1,10 @@
 ///Dart import
+library;
 // ignore_for_file: depend_on_referenced_packages
 
 import 'dart:math';
 
 import 'package:collection/collection.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:getx_admin_panel/core/imports/core_imports.dart';
 import 'package:getx_admin_panel/models/dealer.dart';
@@ -215,8 +215,8 @@ class DealerDataGridSource extends DataGridSource {
         textAlign: isTextAlignRight ? TextAlign.right : TextAlign.left,
         autocorrect: false,
         // keyboardAppearance: kcPrimaryColor,
-        decoration: InputDecoration(
-            contentPadding: const EdgeInsets.fromLTRB(0, 0, 0, 16.0),
+        decoration: const InputDecoration(
+            contentPadding: EdgeInsets.fromLTRB(0, 0, 0, 16.0),
             focusedBorder: UnderlineInputBorder(
                 borderSide: BorderSide(color: kcPrimaryColor))),
         style: textStyle,
@@ -276,7 +276,7 @@ class DealerDataGridSource extends DataGridSource {
                       builder: (BuildContext context, Widget? child) {
                         return Theme(
                           data: Theme.of(context).copyWith(
-                              colorScheme:  ColorScheme.light(
+                              colorScheme:  const ColorScheme.light(
                                   primary: kcPrimaryColorDark)
                                  ),
                           child: child!,

@@ -1,12 +1,11 @@
 import 'dart:developer';
 
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:getx_admin_panel/core/helpers/toast.dart';
 import 'package:getx_admin_panel/core/imports/core_imports.dart';
 import 'package:getx_admin_panel/views/add_purchase_voucher/add_purchase_voucher_controller.dart';
-import 'package:getx_admin_panel/widgets/semiRounded_button.dart';
 import 'package:pluto_grid/pluto_grid.dart';
+// import 'package:pluto_grid_export/pluto_grid_export.dart' as pluto_grid_export;
 
 // RxDouble rowHeight = 100.0.obs;
 // RxDouble gridHeight = calculateGridHeight().obs;
@@ -19,12 +18,12 @@ import 'package:pluto_grid/pluto_grid.dart';
 // }
 
 class PlutoTable extends GetView<AddPurchaseController> {
- late PlutoGridStateManager stateManager ;
+   PlutoTable({super.key});
+  late  PlutoGridStateManager stateManager;
 
-  PlutoTable({super.key});
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(AddPurchaseController());
+    final AddPurchaseController controller = Get.put(AddPurchaseController());
 
     return Center(
       child: Container(
@@ -33,66 +32,56 @@ class PlutoTable extends GetView<AddPurchaseController> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // ResponsiveButton(
-            //   text: 'Add new row',
-            //   onPressed: addNewRow,
-            // ),
             verticalSpaceSmall,
             SingleChildScrollView(
               child: Column(
                 children: [
                   SizedBox(
-                    // height: gridHeight.value,
                     height: MediaQuery.sizeOf(context).height * 0.62,
-                    child: GetBuilder<AddPurchaseController>(
-                        builder: (controller) {
-
-                        // Check if voucherItemsSource is initialized
-
-                          return PlutoGrid(
-
-                            onLoaded: (PlutoGridOnLoadedEvent event) {
-                              stateManager =
-                                  event.stateManager;
-                              stateManager
-                                  .setShowColumnFilter(true);
-                            },
-                            columns: controller.columns,
-                            rows: controller.rows,
-                            createHeader: (stateManager) =>
-                                Header(stateManager: stateManager),
-                            onChanged: (PlutoGridOnChangedEvent event) {
-                              stateManager.notifyListeners();
-                            },
-                            onRowChecked: controller.handleOnRowChecked,
-                            createFooter: (stateManager) {
-                              stateManager.setPageSize(5,
-                                  notify: false); // default 40
-                              return PlutoPagination(stateManager);
-                            },
-                            configuration: PlutoGridConfiguration(
-                              enableMoveDownAfterSelecting: false,
-                              columnSize: const PlutoGridColumnSizeConfig(
-                                autoSizeMode: PlutoAutoSizeMode.equal,
-                              ),
-                              style: PlutoGridStyleConfig(
-                                checkedColor: kcPrimaryColor,
-                                iconSize: 16,
-                                activatedColor: kcGreenColor.withOpacity(0.5),
-                                columnFilterHeight: 35.0,
-                                oddRowColor: kcLightGrey.withOpacity(0.3),
-                                gridBorderRadius: const BorderRadius.only(
-                                  topLeft: Radius.circular(20),
-                                  topRight: Radius.circular(20),
+                    child: Obx(
+                      () => controller.isLoading.value
+                          ? const Center(child: CircularProgressIndicator())
+                          : PlutoGrid(
+                              onLoaded: (PlutoGridOnLoadedEvent event) {
+                                stateManager = event.stateManager;
+                                stateManager.setShowColumnFilter(true);
+                              },
+                              columns: controller.columns,
+                              rows: controller.rows,
+                              createHeader: (stateManager) =>
+                                  Header(stateManager: stateManager),
+                              onChanged: (PlutoGridOnChangedEvent event) {
+                                stateManager.notifyListeners();
+                              },
+                              onRowChecked: controller.handleOnRowChecked,
+                              createFooter: (stateManager) {
+                                stateManager.setPageSize(5,
+                                    notify: false); // default 40
+                                return PlutoPagination(stateManager);
+                              },
+                              configuration: PlutoGridConfiguration(
+                                enableMoveDownAfterSelecting: false,
+                                columnSize: const PlutoGridColumnSizeConfig(
+                                  autoSizeMode: PlutoAutoSizeMode.equal,
                                 ),
-                                gridPopupBorderRadius:
-                                    BorderRadius.circular(10),
+
+
+                                style: PlutoGridStyleConfig(
+                                  checkedColor: kcPrimaryColor,
+                                  iconSize: 16,
+                                  activatedColor: kcGreenColor.withOpacity(0.5),
+                                  columnFilterHeight: 35.0,
+                                  oddRowColor: kcLightGrey.withOpacity(0.3),
+                                  gridBorderRadius: const BorderRadius.only(
+                                    topLeft: Radius.circular(20),
+                                    topRight: Radius.circular(20),
+                                  ),
+                                  gridPopupBorderRadius:
+                                      BorderRadius.circular(10),
+                                ),
                               ),
                             ),
-                          );
-                        }
                     ),
-
                   ),
                 ],
               ),
@@ -105,10 +94,10 @@ class PlutoTable extends GetView<AddPurchaseController> {
 }
 
 class Header extends StatefulWidget {
-  Header({
+  const Header({
     required this.stateManager,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   final PlutoGridStateManager stateManager;
 
@@ -167,7 +156,27 @@ class _HeaderState extends State<Header> {
 
   void addNewRow() {
     // log(validateLastRow(widget.stateManager).toString());
-    if (!validateLastRow(widget.stateManager)) {
+    if (widget.stateManager.refRows.isEmpty) {
+      widget.stateManager.appendRows([
+        PlutoRow(
+          cells: {
+            'account_code': PlutoCell(value: 'Account Code'),
+            'account_name': PlutoCell(value: 'Account Name'),
+            'debit': PlutoCell(value: 0.00),
+            'tax': PlutoCell(value: 0.00),
+            'vat': PlutoCell(value: 0.00),
+            'total_narration': PlutoCell(value: 0.00),
+            'cost_center_1': PlutoCell(value: 'CC1.1'),
+            'cost_center_2': PlutoCell(value: 'CC2.3'),
+            'cost_center_3': PlutoCell(value: 'CC3.1'),
+            'cost_center_4': PlutoCell(value: 'CC4.2'),
+          },
+        ),
+      ]);
+
+      widget.stateManager.setKeepFocus(true);
+      return;
+    } else if (!validateLastRow(widget.stateManager)) {
       showToast(
           message:
               'Please enter Account Name, Account Code, Debit, Tax, and VAT values before adding a new row.');
@@ -218,26 +227,9 @@ class _HeaderState extends State<Header> {
     widget.stateManager.setKeepFocus(true);
   }
 
-  void handleSaveAll() {
+  Future<void> handleSaveAll() async {
     widget.stateManager.setShowLoading(true);
-
-    Future.delayed(const Duration(milliseconds: 500), () {
-      for (var row in widget.stateManager.refRows) {
-        //   if (row.cells['status']!.value != 'saved') {
-        //     row.cells['status']!.value = 'saved';
-        //   }
-        //
-        //   if (row.cells['id']!.value == '') {
-        //     row.cells['id']!.value = 'guest';
-        //   }
-        //
-        //   if (row.cells['name']!.value == '') {
-        //     row.cells['name']!.value = 'anonymous';
-        //   }
-      }
-
-      widget.stateManager.setShowLoading(false);
-    });
+    widget.stateManager.setShowLoading(false);
   }
 
   void handleRemoveCurrentColumnButton() {
@@ -301,20 +293,20 @@ class _HeaderState extends State<Header> {
           crossAxisAlignment: WrapCrossAlignment.start,
           children: [
             IconButton(
-                onPressed: addNewRow, icon: Icon(Icons.add_box_outlined)),
-            IconButton(onPressed: handleSaveAll, icon: Icon(Icons.save)),
+                onPressed: addNewRow, icon: const Icon(Icons.add_box_outlined)),
+            IconButton(onPressed: handleSaveAll, icon: const Icon(Icons.save)),
             IconButton(
                 onPressed: handleRemoveCurrentColumnButton,
-                icon: Icon(Icons.remove_from_queue)),
+                icon: const Icon(Icons.remove_from_queue)),
             IconButton(
                 onPressed: handleRemoveCurrentRowButton,
-                icon: Icon(Icons.delete_outline)),
+                icon: const Icon(Icons.delete_outline)),
             IconButton(
                 onPressed: handleRemoveSelectedRowsButton,
-                icon: Icon(Icons.remove_done)),
+                icon: const Icon(Icons.remove_done)),
             IconButton(
                 onPressed: handleFiltering,
-                icon: Icon(Icons.filter_alt_off_outlined)),
+                icon: const Icon(Icons.filter_alt_off_outlined)),
           ],
         ),
       ),

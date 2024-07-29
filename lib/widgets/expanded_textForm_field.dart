@@ -10,7 +10,7 @@ class ExpandedTextFormField extends StatelessWidget {
   final String label;
   final TextEditingController controller;// Height of the TextFormField
 
-  const ExpandedTextFormField({Key? key, required this.width, required this.height, required this .controller,required this.label}) : super(key: key);
+  const ExpandedTextFormField({super.key, required this.width, required this.height, required this .controller,required this.label});
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +51,7 @@ class ExpandedTextFormField extends StatelessWidget {
                   color: kcLightGrey,
                 ),
               ),
-              contentPadding: EdgeInsets.all(14.0),
+              contentPadding: const EdgeInsets.all(14.0),
               // labelText: 'Bio',
             ),
           ),

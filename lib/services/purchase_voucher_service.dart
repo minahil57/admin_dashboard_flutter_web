@@ -2,7 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:getx_admin_panel/core/constants/string_manager.dart';
 import 'package:getx_admin_panel/models/purchase_voucher_dropdowns.dart';
 import 'package:getx_admin_panel/services/authentication_service.dart';
-import 'package:getx_admin_panel/user_data/current_userDetail.dart';
+import 'package:getx_admin_panel/user_data/current_user_detail.dart';
 
 import '../core/dio_instance.dart';
 class PurchaseVoucherService{
@@ -120,7 +120,7 @@ class PurchaseVoucherService{
         throw Exception('Failed to load data');
       }
     } catch (e) {
-      throw e;
+      rethrow;
     }
   }
 

@@ -15,7 +15,8 @@ class AccountsTree extends GetView<DashboardController> {
   Widget build(BuildContext context) {
     final controller = Get.put(DashboardController());
     return Expanded(
-      child: FutureBuilder<List<MyTreeNode>>(
+      child:
+      FutureBuilder<List<MyTreeNode>>(
         key: ValueKey(controller.searchQuery.value),
         future: controller.itemMasterService.getAccountTree(),
         builder:
@@ -24,13 +25,15 @@ class AccountsTree extends GetView<DashboardController> {
           // late TreeController <MyTreeNode> treeController ;
           controller.treeController = TreeController<MyTreeNode>(
             roots: snapshot.data ?? controller.itemMasterService.accounts,
+            parentProvider: (MyTreeNode node) => node.parent,
             childrenProvider: (MyTreeNode node) => node.children,
           );
           return snapshot.connectionState == ConnectionState.waiting
               ? const CircularProgressIndicator(
                   color: kcWhitecolor,
                 )
-              : TreeView<MyTreeNode>(
+              :
+          TreeView<MyTreeNode>(
                   key: controller.key,
                   treeController: controller.treeController,
                   nodeBuilder:

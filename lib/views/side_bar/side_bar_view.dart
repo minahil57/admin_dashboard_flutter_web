@@ -23,57 +23,53 @@ class SideNavigationBar extends GetView<SideBarController> {
     return Obx(() => AdminScaffold(
       mobileThreshold: 1100,
       backgroundColor: kcWhitecolor,
-              appBar: AppBar(
-               elevation: 2,
-                backgroundColor: kcWhitecolor,
-
-                shadowColor: kcPrimaryColor,
-                title: Animate(
-                  effects: const [FadeEffect(), ScaleEffect()],
-                  child: Image.asset(AssetManager.qfinityWithoutBackgroundLogo,
-                      width: 50, height: 50),
-                ),
-                actions: [
-                  Stack(
+      appBar: AppBar(
+        elevation: 2,
+        backgroundColor: kcWhitecolor,
+        shadowColor: kcPrimaryColor,
+        title: Animate(
+          effects: const [FadeEffect(), ScaleEffect()],
+          child: Image.asset(AssetManager.qfinityWithoutBackgroundLogo,
+              width: 50, height: 50),
+        ),
+        actions: [
+          Stack(
+            children: [
+              GestureDetector(
+                onTap: () {
+                  context.go('/editable_table');
+                },
+                child: Container(
+                  alignment: Alignment.center,
+                  margin: const EdgeInsets.all(10),
+                  padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 1),
+                  decoration: BoxDecoration(
+                    color: kcPrimaryColor,
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Row(
                     children: [
-                      GestureDetector(
-                        onTap: (){
-                          context.go('/editable_table');
-                        },
-                        child: Container(
-                          alignment: Alignment.center,
-                          margin: const EdgeInsets.all(10),
-                          padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 1),
-                          decoration: BoxDecoration(
-                            color: kcPrimaryColor,
-                        borderRadius: BorderRadius.circular(10),
-                                            ),
-                                            child: Row(
-                                          children: [
-                                            const Icon(
+                      const Icon(
                         Icons.arrow_drop_down,
                         color: kcWhitecolor,
                         size: 18,
-                                            ),
-                                            Text(
+                      ),
+                      Text(
                         'Admin',
                         style: getRegularStyle(color: kcWhitecolor),
-                                            ),
-
-                                          ],
-                                        ),
-                                      ),
                       ),
+                    ],
+                  ),
+                ),
+              ),
               Positioned(
                 right: 0,
                 bottom: 10,
-               
                 child: Container(
                   padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                   decoration: const BoxDecoration(
                     color: kcVeryLightGrey,
                     shape: BoxShape.circle,
-                    
                   ),
                   child: const Icon(
                     Icons.logout_outlined,
@@ -97,16 +93,20 @@ class SideNavigationBar extends GetView<SideBarController> {
         key: sideBarKey,
         onSelected: (e) {
           final index = controller.getSideBarItem(e);
-      
+          if (index != -1) {
+            controller.selectedRoute.value = e.route!;
             navigationShell.goBranch(
               index,
               initialLocation: index == navigationShell.currentIndex,
             );
+          }
         },
         items: controller.items,
-         selectedRoute: controller.selectedRoute.value,
+        selectedRoute: controller.selectedRoute.value,
       ),
       body: navigationShell,
     ));
+
+
   }
 }

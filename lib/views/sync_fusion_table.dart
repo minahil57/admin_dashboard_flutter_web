@@ -1,4 +1,5 @@
 /// Dart import
+library;
 import 'dart:core';
 
 /// Package import
@@ -11,7 +12,7 @@ import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 /// Render data grid with editing.
 class EditingDataGrid extends StatefulWidget {
   /// Create data grid with editing.
-  const EditingDataGrid({Key? key}) : super(key: key);
+  const EditingDataGrid({super.key});
 
   @override
   State<EditingDataGrid> createState() => _EditingDataGridState();

@@ -8,7 +8,7 @@ class SearchTextField extends StatelessWidget {
   final TextEditingController searchController;
   final DashboardController controller = Get.put(DashboardController());
 
-  SearchTextField({required this.searchController});
+  SearchTextField({super.key, required this.searchController});
 
   @override
   Widget build(BuildContext context) {

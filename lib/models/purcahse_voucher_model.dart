@@ -83,33 +83,33 @@ class AutoGenerate {
   }
 
   Map<String, dynamic> toJson() {
-    final _data = <String, dynamic>{};
-    _data['transactionMethod'] = transactionMethod;
-    _data['postingDate'] = postingDate;
-    _data['currency'] = currency;
-    _data['chequeNo'] = chequeNo;
-    _data['chequeDate'] = chequeDate;
-    _data['paidTo'] = paidTo;
-    _data['refNo'] = refNo;
-    _data['accountCode'] = accountCode;
-    _data['accountName'] = accountName;
-    _data['vatAccountCode'] = vatAccountCode;
-    _data['creditAmount'] = creditAmount;
-    _data['conRate'] = conRate;
-    _data['conAmount'] = conAmount;
-    _data['narration'] = narration;
-    _data['financialYear'] = financialYear;
-    _data['taxCode'] = taxCode;
-    _data['taxInclusive'] = taxInclusive;
-    _data['costCenter1'] = costCenter1;
-    _data['costCenter2'] = costCenter2;
-    _data['costCenter3'] = costCenter3;
-    _data['costCenter4'] = costCenter4;
-    _data['createdBy'] = createdBy;
-    _data['createdOn'] = createdOn;
-    _data['voucherItems'] = voucherItems.map((e)=>e.toJson()).toList();
-    _data['voucherAttachments'] = voucherAttachments.map((e)=>e.toJson()).toList();
-    return _data;
+    final data = <String, dynamic>{};
+    data['transactionMethod'] = transactionMethod;
+    data['postingDate'] = postingDate;
+    data['currency'] = currency;
+    data['chequeNo'] = chequeNo;
+    data['chequeDate'] = chequeDate;
+    data['paidTo'] = paidTo;
+    data['refNo'] = refNo;
+    data['accountCode'] = accountCode;
+    data['accountName'] = accountName;
+    data['vatAccountCode'] = vatAccountCode;
+    data['creditAmount'] = creditAmount;
+    data['conRate'] = conRate;
+    data['conAmount'] = conAmount;
+    data['narration'] = narration;
+    data['financialYear'] = financialYear;
+    data['taxCode'] = taxCode;
+    data['taxInclusive'] = taxInclusive;
+    data['costCenter1'] = costCenter1;
+    data['costCenter2'] = costCenter2;
+    data['costCenter3'] = costCenter3;
+    data['costCenter4'] = costCenter4;
+    data['createdBy'] = createdBy;
+    data['createdOn'] = createdOn;
+    data['voucherItems'] = voucherItems.map((e)=>e.toJson()).toList();
+    data['voucherAttachments'] = voucherAttachments.map((e)=>e.toJson()).toList();
+    return data;
   }
 }
 
