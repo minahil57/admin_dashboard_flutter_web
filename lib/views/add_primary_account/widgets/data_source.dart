@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:getx_admin_panel/core/theme/app_colors.dart';
 import 'package:getx_admin_panel/core/theme/text_style.dart';
 import 'package:getx_admin_panel/models/tree_node.dart';
@@ -17,7 +18,7 @@ class PrimaryAccountSource extends DataGridSource {
               DataGridCell<String>(columnName: 'accountType', value: e.accountName),
               DataGridCell<String>(
                   columnName: 'balanceType', value: e.balanceType),
-               DataGridCell(columnName: 'actions', value : e.isActive),
+               DataGridCell(columnName: 'actions', value : e.isActive.value),
             ],
           ),
         )
@@ -56,7 +57,7 @@ class PrimaryAccountSource extends DataGridSource {
                     }),
                 onChanged: (value) {
 
-                  // dataGridCell.value = value;
+
                 },
               ),
 
@@ -85,7 +86,7 @@ class PrimaryAccountSource extends DataGridSource {
 
               DataGridCell<String>(
                   columnName: 'balanceType', value: e.balanceType),
-             DataGridCell(columnName: 'actions', value: e.isActive),
+             DataGridCell(columnName: 'actions', value: e.isActive.value),
             ],
           ),
         )

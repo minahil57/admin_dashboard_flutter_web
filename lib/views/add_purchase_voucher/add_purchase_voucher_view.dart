@@ -26,6 +26,8 @@ class PurchaseVoucherView extends GetView<AddPurchaseController> {
   Widget build(BuildContext context) {
 
     final itemController = Get.put(AddPurchaseController());
+    itemController.customSelectionManager =
+        CustomSelectionManager(itemController.dataGridController, context);
     WidgetsBinding.instance.addPostFrameCallback((_) {
       itemController.setContext(context);
       log('Called this function');

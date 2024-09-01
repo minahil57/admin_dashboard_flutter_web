@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter_fancy_tree_view/flutter_fancy_tree_view.dart';
 import 'package:get/get.dart';
 import 'package:getx_admin_panel/core/imports/core_imports.dart';
+import 'package:getx_admin_panel/core/imports/external_imports.dart';
 import 'package:getx_admin_panel/models/tree_node.dart';
 import 'package:getx_admin_panel/services/account_tree_service.dart';
 import 'package:getx_admin_panel/widgets/rounded_drop_down.dart';
@@ -91,29 +92,111 @@ class DashboardController extends GetxController {
          log(selectedOption);
          if(selectedOption == 'Add'){
            log(node.balance.toString());
-         if(node.balance < 0 || node.balance > 0) {
-           showDialog(
-             context: key.currentContext!,
-             builder: (context) {
-               return AlertDialog(
-                 title: Text('Success'),
-                 content: Text(
-                     'You cannot add new account once any transaction is done'),
-               );
-             },
-           );
+           if(node.level == 1 ){
+             showDialog(
+               context: key.currentContext!,
+               builder: (context) {
+                 return AlertDialog(
+                   title: Text(
+                     'Primary Account cannot be added from here',
+                     style: getBoldStyle(
+                       fontSize: 24,
+                       fontWeight: FontWeight.bold,
+                       color: Colors.blueAccent,
+                     ),
+                   ),
+                   content: Text(
+                     'To Add to Primary Account you need to navigate to Add Primary Acount',
+                     style: getRegularStyle(
+                       fontSize: 18,
+                       color: Colors.black87,
+                     ),
+                   ),
+                   actions: <Widget>[
+                     TextButton(
+                       child: Text(
+                         'Cancel',
+                         style: getRegularStyle(
+                           fontSize: 18,
+                           color: Colors.blueAccent,
+                         ),
+                       ),
+                       onPressed: () {
+                         Navigator.of(context).pop();
+                       },
+                     ),
+                     TextButton(
+                       child: Text(
+                         'Move to add screen',
+                         style: getRegularStyle(
+                           fontSize: 18,
+                           color: Colors.blueAccent,
+                         ),
+                       ),
+                       onPressed: () {
+                         Navigator.of(context).pop();
+                         context.go('/add_primary_account');
+                       },
+                     ),
+                   ],
+                 );
 
-         }
+               },
+             );
+           }
          else{
-           showDialog(
-             context: context,
-             builder: (context) => Dialog(
-               backgroundColor: kcWhitecolor,
-               child: buildMobileForm(context),
-             ),
-           );
+           if(node.balance < 0 || node.balance > 0) {
+               showDialog(
+                 context: key.currentContext!,
+                 builder: (context) {
+                   return AlertDialog(
+                     title: Text(
+                       'Important Notice',
+                       style: getBoldStyle(
+                         fontSize: 24,
+                         fontWeight: FontWeight.bold,
+                         color: Colors.blueAccent,
+                       ),
+                     ),
+                     content: Text(
+                       'Please note, once a transaction is completed, adding a new account is not permitted.',
+                       style: getRegularStyle(
+                         fontSize: 18,
+                         color: Colors.black87,
+                       ),
+                     ),
+                     actions: <Widget>[
+                       TextButton(
+                         child: Text(
+                           'Understood',
+                           style: getRegularStyle(
+                             fontSize: 18,
+                             color: Colors.blueAccent,
+                           ),
+                         ),
+                         onPressed: () {
+                           Navigator.of(context).pop();
+                         },
+                       ),
+                     ],
+                   );
 
-         }
+                 },
+               );
+
+             }
+             else{
+               showDialog(
+                 context: context,
+                 builder: (context) => Dialog(
+                   backgroundColor: kcWhitecolor,
+                   child: buildMobileForm(context),
+                 ),
+               );
+
+             }
+           }
+
          }
        }
      }
@@ -484,7 +567,7 @@ class DashboardController extends GetxController {
                      style: getRegularStyle(),
                    ),
                    IconButton(onPressed: (){
-
+                     context.pop();
                    }, icon: Icon(Icons.close),),
                  ],
                ),
@@ -532,7 +615,7 @@ class DashboardController extends GetxController {
                ResponsiveButton(
                  text: 'Add',
                  onPressed: () {
-
+                   context.pop();
                  },
                ),
              ],

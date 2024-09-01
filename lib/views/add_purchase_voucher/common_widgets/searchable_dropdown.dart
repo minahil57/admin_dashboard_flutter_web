@@ -16,12 +16,14 @@ class SearchableDropdownRenderer extends StatefulWidget {
   final List<String> items;
   final String text;
   final ValueChanged<String?> onChanged;
+  final ValueChanged<String?> onSubmitted;
 
   const SearchableDropdownRenderer({
     super.key,
     required this.context,
     required this.items,
     required this.text,
+    required this.onSubmitted,
     required this.onChanged,
   });
 
@@ -95,6 +97,7 @@ class _SearchableDropdownRendererState extends State<SearchableDropdownRenderer>
           child: Material(
             elevation: 4.0,
             child: ListView.builder(
+              controller: _dropdownController.scrollController,
               padding: EdgeInsets.zero,
               shrinkWrap: true,
               itemCount: _dropdownController.filteredItems.length,
@@ -123,12 +126,15 @@ class _SearchableDropdownRendererState extends State<SearchableDropdownRenderer>
   Widget build(BuildContext context) {
     return Focus(
       autofocus: true,
-      onKeyEvent: (node, event) => _dropdownController.handleKeyEvent(node, event)!,
+      onKeyEvent: (node, event) => _dropdownController.handleKeyEvent(node, event,_controller,widget.onChanged)!,
       child: CompositedTransformTarget(
         link: _layerLink,
         child: TextField(
           controller: _controller,
-          onSubmitted: widget.onChanged,
+          onSubmitted:(value) {
+            widget.onSubmitted;
+            _removeOverlay();
+          },
           onChanged: (value) {
             log(value);
             _dropdownController.filterItems(value, widget.items);

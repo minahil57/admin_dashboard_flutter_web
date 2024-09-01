@@ -2,6 +2,7 @@ import 'dart:developer' as dv;
 import 'dart:math';
 // import 'dart:math';
 
+import 'package:flutter/services.dart';
 import 'package:flutter_dropzone/flutter_dropzone.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
@@ -31,6 +32,8 @@ class AddPurchaseController extends GetxController {
   ValueNotifier<BuildContext?> get contextNotifier => _contextNotifier;
 
   BuildContext? get context => _context.value;
+  late CustomSelectionManager customSelectionManager;
+  final DataGridController dataGridController = DataGridController();
   final modifiedDateController = TextEditingController();
   final createdDateController = TextEditingController();
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
@@ -124,9 +127,12 @@ class AddPurchaseController extends GetxController {
   var editingRowIndex = (-1).obs;
   var editingColumnIndex = (-1).obs;
 
-  void startEditing(int rowIndex, int columnIndex) {
-    editingRowIndex.value = rowIndex;
-    editingColumnIndex.value = columnIndex;
+  void startEditing(DataGridRow dataGridRow,   RowColumnIndex rowColumnIndex,   GridColumn column)
+  {
+    // editingRowIndex.value = rowIndex;
+    // editingColumnIndex.value = columnIndex;
+    voucherItemsSource.value?.onCellBeginEdit(dataGridRow, rowColumnIndex,column);
+
   }
 
   void stopEditing() {
@@ -154,6 +160,7 @@ class AddPurchaseController extends GetxController {
     super.onInit();
     searchControllers = List.generate(10, (index) => TextEditingController());
     voucherItems = _getDealerDetails(5);
+
     initializeTable();
     initializeTableColumnWidth();
 
@@ -227,16 +234,20 @@ class AddPurchaseController extends GetxController {
   bool checkCellReadOnly(PlutoRow row, PlutoCell cell) {
     return true; // Otherwise, allow editing
   }
+  KeyEventResult handleKeyEvent(FocusNode node, KeyEvent event) {
+
+    return KeyEventResult.ignored;
+  }
 
   Future<void> initializeTable() async {
     try {
       isLoading.value = true;
-      voucherItemsSource.value = VoucherItemsSource([], [], [], [], [], [],voucherItems,_context.value);
+      voucherItemsSource.value = VoucherItemsSource([], [], [], [], [], [],voucherItems,accounts,_context.value);
       //
       await fetchAllDropDowns(); // Assuming fetchAllDropDowns is an async method
 
       voucherItemsSource.value = VoucherItemsSource(
-          accNums, accNames, cc1Names, cc2Names, cc3Names, cc4Names,voucherItems,_context.value);
+          accNums, accNames, cc1Names, cc2Names, cc3Names, cc4Names,voucherItems,accounts,_context.value);
 
       table_rows = [
         [
@@ -580,6 +591,35 @@ class AddPurchaseController extends GetxController {
 
     return items;
   }
+  var currentRowColumnIndex = Rx<RowColumnIndex?>(null);
+
+  void setCurrentCell(DataGridCellTapDetails details) {
+    currentRowColumnIndex.value = details.rowColumnIndex;
+  }
+
+
+
+  void moveNextCell(int rowIndex, int columnIndex, int totalColumns, int totalRows) {
+    int nextColumnIndex = columnIndex + 1;
+    int nextRowIndex = rowIndex;
+
+    // If it's the last column, move to the next row
+    if (nextColumnIndex >= totalColumns) {
+      nextColumnIndex = 0;
+      nextRowIndex++;
+    }
+
+    // If it's the last row, cycle back to the first row
+    if (nextRowIndex >= totalRows) {
+      nextRowIndex = 0;
+    }
+
+    // Update the current cell index
+    currentRowColumnIndex.value = RowColumnIndex(nextRowIndex, nextColumnIndex);
+
+    // Start editing the next cell
+    // startEditing(nextRowIndex, nextColumnIndex);
+  }
 
   Widget buildMobileForm(BuildContext context) {
     final controller = Get.put(AddPurchaseController());
@@ -670,8 +710,8 @@ class AddPurchaseController extends GetxController {
     for (int i = 1; i <= count; i++) {
       final VoucherItems ord = VoucherItems(
         _productNo[random.nextInt(15)],
-        'Select Acc no',
-        'Select Acc Name',
+        '',
+        '',
         _productNo[random.nextInt(15)],
         _productNo[random.nextInt(15)],
         _productNo[random.nextInt(15)],
@@ -679,11 +719,11 @@ class AddPurchaseController extends GetxController {
         _productNo[random.nextInt(15)].toDouble(),
         _productNo[random.nextInt(15)],
         _productNo[random.nextInt(15)],
-        'Enter Narration',
-        'Select CostCenter 1',
-        'Select CostCenter 2',
-        'Select CostCenter 3',
-        'Select CostCenter 4',
+        '',
+        '',
+        '',
+        '',
+        '',
       );
       itemDetails.add(ord);
     }
@@ -746,4 +786,28 @@ class AddPurchaseController extends GetxController {
     // ));
   }
   void onCancelPress() {}
+}
+class CustomSelectionManager extends RowSelectionManager {
+  CustomSelectionManager(this.dataGridController, this.context);
+  DataGridController dataGridController;
+  BuildContext context;
+
+  @override
+  Future<void> handleKeyEvent(KeyEvent keyEvent) async {
+    // Perform editing by enter  key.
+    if (keyEvent.logicalKey == LogicalKeyboardKey.enter) {
+      // Open the dropdown list for dropdown columns only.
+      // Therefore, we have checked the columnIndex.
+      // if (dataGridController.currentCell.columnIndex == 2) {
+      //   // dataGridController.isCurrentCellInEditing ? dataGridController.beginEdit(dataGridController.currentCell) : dataGridController.
+      //   // Open the dropdown according to the corresponding details.
+      //   // openDropdown(dataGridController.currentCell.rowIndex, context);
+      //   return;
+      // }
+      dataGridController.beginEdit(dataGridController.currentCell);
+      return;
+    }
+
+    super.handleKeyEvent(keyEvent);
+  }
 }
